@@ -1,5 +1,15 @@
 # cpt-commands
 
+- [Basic Configuration](basic_configuration.md)
+    - [Entering Privileged and Configuration Modes](basic_configuration.md#entering-privileged-and-configuration-modes)
+    - [Device Identity and Security](basic_configuration.md#device-identity-and-security)
+    - [Disabling Unnecessary Features](basic_configuration.md#disabling-unnecessary-features)
+    - [Saving and Viewing Configurations](basic_configuration.md#saving-and-viewing-configurations)
+    - [Interface Configuration](basic_configuration.md#interface-configuration)
+    - [Basic Verification Commands](basic_configuration.md#basic-verification-commands)
+
+
+
 ---
 
 ### **Basic Configuration Commands**
