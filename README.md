@@ -6,6 +6,7 @@
     - [Disabling Unnecessary Features](basic_configuration.md#disabling-unnecessary-features)
     - [Saving and Viewing Configurations](basic_configuration.md#saving-and-viewing-configurations)
     - [Interface Configuration](basic_configuration.md#interface-configuration)
+    - [Removing Configurations](basic_configuration.md#removing-configurations)
     - [Basic Verification Commands](basic_configuration.md#basic-verification-commands)
 
 - [VLAN Configuration](vlan_configuration.md)
