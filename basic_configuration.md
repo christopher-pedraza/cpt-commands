@@ -45,6 +45,18 @@ Return to the [main page](README.md) for more topics.
 | `duplex <full/half/auto>` | Sets the duplex mode | `full`, `half`, `auto` |
 | `speed <10/100/1000/auto>` | Sets the interface speed | `10`, `100`, `1000`, `auto` |
 
+## Removing Configurations
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `erase startup-config` | Erases the startup configuration stored in NVRAM | None |
+| `delete vlan.dat` | Deletes the VLAN database file | None |
+| `reload` | Reboots the device to apply changes | None |
+| `default interface <interface>` | Resets an interface to its default settings | `<interface>`: Interface to reset |
+| `no hostname` | Removes the configured hostname, reverting to default | None |
+| `no enable secret` | Removes the privileged EXEC mode password | None |
+| `no banner motd` | Removes the configured Message of the Day banner | None |
+
 ## Basic Verification Commands
 
 | Command | Description | Parameters |
