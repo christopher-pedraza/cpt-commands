@@ -59,12 +59,12 @@ Return to the [main page](README.md) for more topics.
 
 ### DTP Mode Comparison Table
 
-| Local Mode | Remote Mode | Resulting Link |
-|------------|------------|---------------|
-| Dynamic Auto | Dynamic Auto | Access |
-| Dynamic Auto | Dynamic Desirable | Trunk |
-| Access | Trunk | Limited Connectivity |
-| Trunk | Trunk | Trunk |
+|  | Dynamic Auto | Dynamic Desirable | Trunk | Access |
+|---|---|---|---|---|
+| **Dynamic Auto** | Access | Trunk | Trunk | Access |
+| **Dynamic Desirable** | Trunk | Trunk | Trunk | Access |
+| **Trunk** | Trunk | Trunk | Trunk | Limited Connectivity |
+| **Access** | Access | Access | Limited Connectivity | Access |
 
 ## VLAN Verification Commands
 
