@@ -42,8 +42,8 @@ Return to the [main page](README.md) for more topics.
 | `ip address <IP> <subnet>` | Assigns an IP address to the interface | `<IP>`: IP address, `<subnet>`: Subnet mask |
 | `no shutdown` | Enables the interface | None |
 | `description <text>` | Adds a description to an interface | `<text>`: Description |
-| `duplex <full/half/auto>` | Sets the duplex mode | `full`, `half`, `auto` |
-| `speed <10/100/1000/auto>` | Sets the interface speed | `10`, `100`, `1000`, `auto` |
+| `duplex <full\|half\|auto>` | Sets the duplex mode | `full`, `half`, `auto` |
+| `speed <10\|100\|1000\|auto>` | Sets the interface speed | `10`, `100`, `1000`, `auto` |
 
 ## Removing Configurations
 
