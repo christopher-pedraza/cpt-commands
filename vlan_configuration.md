@@ -54,7 +54,7 @@ Return to the [main page](README.md) for more topics.
 |---------|------------|------------|
 | `switchport nonegotiate` | Disables DTP negotiation | None |
 | `switchport mode dynamic auto` | Sets port to auto mode | None |
-| `switchport mode {access | dynamic {auto | desirable} | trunk}` | Configures DTP mode | Access, Auto, Desirable, Trunk |
+| `switchport mode {access \| dynamic {auto \| desirable} \| trunk}` | Configures DTP mode | Access, Auto, Desirable, Trunk |
 | `show dtp interface <interface>` | Displays DTP status for an interface | `<interface>`: Interface name |
 
 ### DTP Mode Comparison Table
