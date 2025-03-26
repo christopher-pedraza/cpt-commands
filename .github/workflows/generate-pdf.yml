@@ -21,7 +21,7 @@ jobs:
       - name: Generate PDF
         run: |
           # Combine all .md files into a single PDF with a specified title
-          pandoc *.md -o output.pdf --pdf-engine=pdflatex --metadata title="Cisco Packet Tracer Commands" --variable geometry:margin=0.5in --variable linkcolor=black --variable urlcolor=black
+          pandoc *.md -o cpt-commands.pdf --pdf-engine=pdflatex --metadata title="Cisco Packet Tracer Commands" --variable geometry:margin=0.5in --variable linkcolor=black --variable urlcolor=black
 
       - name: Set Tag Name
         id: set_tag
@@ -37,6 +37,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}  # Use the combined version and date as the tag
-          files: output.pdf
+          files: cpt-commands.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
