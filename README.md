@@ -28,42 +28,6 @@
 
 ---
 
-### **Basic Configuration Commands**
-| Command | Description | Parameters |
-|---------|------------|------------|
-| `enable` | Enters privileged EXEC mode | None |
-| `configure terminal` | Enters global configuration mode | None |
-| `hostname <name>` | Sets the device hostname | `<name>`: Desired hostname |
-| `no ip domain-lookup` | Disables automatic DNS lookup to prevent delays | None |
-| `service password-encryption` | Encrypts all passwords stored in the configuration file | None |
-| `copy running-config startup-config` | Saves the current configuration to the startup file | None |
-
----
-
-### **Interface Configuration Commands**
-| Command | Description | Parameters |
-|---------|------------|------------|
-| `interface <interface>` | Selects an interface to configure | `<interface>`: e.g., `FastEthernet0/0`, `GigabitEthernet0/1` |
-| `ip address <IP> <subnet>` | Assigns an IP address to the interface | `<IP>`: IP address, `<subnet>`: Subnet mask |
-| `no shutdown` | Enables the interface | None |
-| `description <text>` | Adds a description to an interface | `<text>`: Description |
-| `duplex <full/half/auto>` | Sets the duplex mode | `full`, `half`, `auto` |
-| `speed <10/100/1000/auto>` | Sets the interface speed | `10`, `100`, `1000`, `auto` |
-
----
-
-### **VLAN Configuration Commands**
-| Command | Description | Parameters |
-|---------|------------|------------|
-| `vlan <VLAN_ID>` | Creates a VLAN and enters VLAN configuration mode | `<VLAN_ID>`: VLAN number (1-4094) |
-| `name <VLAN_NAME>` | Assigns a name to a VLAN | `<VLAN_NAME>`: VLAN name |
-| `interface <interface>` | Selects an interface to configure VLAN | `<interface>`: e.g., `FastEthernet0/1` |
-| `switchport mode access` | Sets the interface as an access port | None |
-| `switchport access vlan <VLAN_ID>` | Assigns an interface to a VLAN | `<VLAN_ID>`: VLAN number |
-| `switchport mode trunk` | Configures the interface as a trunk port | None |
-| `switchport trunk allowed vlan <VLAN_LIST>` | Specifies allowed VLANs on a trunk | `<VLAN_LIST>`: VLAN numbers separated by commas |
-
----
 
 ### **Routing Configuration Commands**
 | Command | Description | Parameters |
