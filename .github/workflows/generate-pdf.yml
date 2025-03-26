@@ -38,4 +38,5 @@ jobs:
         with:
           tag_name: ${{ env.TAG_NAME }}  # Use the combined version and date as the tag
           files: output.pdf
-          token: ${{ secrets.PAT_TOKEN }}  # Use the Personal Access Token
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
