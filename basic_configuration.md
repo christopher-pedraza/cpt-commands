@@ -44,6 +44,7 @@ Return to the [main page](README.md) for more topics.
 | `description <text>` | Adds a description to an interface | `<text>`: Description |
 | `duplex <full\|half\|auto>` | Sets the duplex mode | `full`, `half`, `auto` |
 | `speed <10\|100\|1000\|auto>` | Sets the interface speed | `10`, `100`, `1000`, `auto` |
+| `mdix auto` | Enables automatic crossover detection | None |
 
 ## Removing Configurations
 
@@ -81,6 +82,7 @@ Return to the [main page](README.md) for more topics.
 | `show version` | Displays system version, uptime, and hardware details | None |
 | `ping <IP>` | Sends ICMP packets to check connectivity | `<IP>`: Destination IP address |
 | `traceroute <IP>` | Traces the route to a destination | `<IP>`: Destination IP address |
+| `show controllers ethernet-controller <interface> phy \| include MDIX` | Displays MDIX status for an interface | `<interface>`: Interface name (e.g., `fa0/1`) |
 
 ---
 
