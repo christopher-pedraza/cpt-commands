@@ -21,7 +21,7 @@ jobs:
       - name: Generate PDF
         run: |
           # Combine all .md files into a single PDF using wkhtmltopdf
-          pandoc *.md -o output.pdf --pdf-engine=wkhtmltopdf --metadata title="Cisco Packet Tracer Commands" --variable geometry:margin=1in --variable linkcolor=black --variable urlcolor=black
+          pandoc *.md -o output.pdf --pdf-engine=wkhtmltopdf --metadata title="Cisco Packet Tracer Commands" --css "data:text/css,@page { margin: 0.5in; } body { margin: 0; }"
 
       - name: Set Tag Name
         id: set_tag
