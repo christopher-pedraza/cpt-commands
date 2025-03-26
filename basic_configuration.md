@@ -57,6 +57,22 @@ Return to the [main page](README.md) for more topics.
 | `no enable secret` | Removes the privileged EXEC mode password | None |
 | `no banner motd` | Removes the configured Message of the Day banner | None |
 
+## History Commands
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `show history` | Displays the command history | None |
+| `terminal history size <size>` | Modifies the number of stored history commands | `<size>`: Number of commands to store |
+
+## Show Command Filters
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `show running-config \| include <text>` | Displays only lines that contain `<text>` | `<text>`: Text to match |
+| `show running-config \| exclude <text>` | Displays all lines except those containing `<text>` | `<text>`: Text to exclude |
+| `show running-config \| begin <text>` | Displays output starting from the first occurrence of `<text>` | `<text>`: Text to begin from |
+| `show running-config \| section <text>` | Displays the section that includes `<text>` | `<text>`: Section header or keyword |
+
 ## Basic Verification Commands
 
 | Command | Description | Parameters |
