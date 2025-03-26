@@ -84,6 +84,14 @@ Return to the [main page](README.md) for more topics.
 | `traceroute <IP>` | Traces the route to a destination | `<IP>`: Destination IP address |
 | `show controllers ethernet-controller <interface> phy \| include MDIX` | Displays MDIX status for an interface | `<interface>`: Interface name (e.g., `fa0/1`) |
 
+## Boot and Flash Management
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `boot system flash:/<image>` | Specifies the boot image file | `<image>`: Path to the image file |
+| `show flash` | Displays the contents of the flash memory | None |
+| `boot system` | Manually boots the system | None |
+
 ---
 
 Return to the [main page](README.md) for more topics.
