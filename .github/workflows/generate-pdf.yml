@@ -13,15 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Pandoc and wkhtmltopdf
+      - name: Install Pandoc and TeX Live
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc wkhtmltopdf
+          sudo apt-get install -y pandoc texlive
 
       - name: Generate PDF
         run: |
-          # Combine all .md files into a single PDF using wkhtmltopdf
-          pandoc *.md -o output.pdf --pdf-engine=wkhtmltopdf --metadata title="Cisco Packet Tracer Commands" --css "data:text/css,@page { margin: 0.5in; } body { margin: 0; }"
+          # Combine all .md files into a single PDF with a specified title
+          pandoc *.md -o output.pdf --pdf-engine=pdflatex --metadata title="Cisco Packet Tracer Commands" --variable geometry:margin=0.5in --variable linkcolor=black --variable urlcolor=black
 
       - name: Set Tag Name
         id: set_tag
