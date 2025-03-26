@@ -7,6 +7,8 @@
     - [Saving and Viewing Configurations](basic_configuration.md#saving-and-viewing-configurations)
     - [Interface Configuration](basic_configuration.md#interface-configuration)
     - [Removing Configurations](basic_configuration.md#removing-configurations)
+    - [History Commands](basic_configuration.md#history-commands)
+    - [Show Command Filters](basic_configuration.md#show-command-filters)
     - [Basic Verification Commands](basic_configuration.md#basic-verification-commands)
 
 - [VLAN Configuration](vlan_configuration.md)
