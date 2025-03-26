@@ -1,0 +1,33 @@
+name: Generate PDF from Markdown
+
+on:
+  push:
+    branches:
+      - main  # Trigger on any push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Generate PDF
+        run: |
+          # Combine all .md files into a single PDF
+          pandoc *.md -o output.pdf
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag: ${{ github.sha }}  # Use the commit SHA as the tag
+          files: output.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
