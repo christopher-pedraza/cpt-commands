@@ -1,0 +1,42 @@
+name: Generate PDF from Markdown
+
+on:
+  push:
+    branches:
+      - main  # Trigger on any push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Pandoc and TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive
+
+      - name: Generate PDF
+        run: |
+          # Combine all .md files into a single PDF with a specified title
+          pandoc *.md -o output.pdf --pdf-engine=pdflatex --metadata title="Cisco Packet Tracer Commands" --variable geometry:margin=1in --variable linkcolor=black --variable urlcolor=black
+
+      - name: Set Tag Name
+        id: set_tag
+        run: |
+          # Get the current date in YYYYMMDD format
+          DATE=$(date +'%Y%m%d')
+          # Define the version number
+          VERSION="1.${DATE}"
+          echo "TAG_NAME=${VERSION}" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG_NAME }}  # Use the combined version and date as the tag
+          files: output.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
