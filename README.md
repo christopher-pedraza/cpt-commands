@@ -10,6 +10,7 @@
     - [History Commands](basic_configuration.md#history-commands)
     - [Show Command Filters](basic_configuration.md#show-command-filters)
     - [Basic Verification Commands](basic_configuration.md#basic-verification-commands)
+    - [Boot and Flash Management](basic_configuration.md#boot-and-flash-management)
 
 - [VLAN Configuration](vlan_configuration.md)
     - [Creating and Managing VLANs](vlan_configuration.md#creating-and-managing-vlans)
