@@ -47,6 +47,7 @@ Return to the [main page](README.md) for more topics.
 | `interface <interface>` | Selects an interface to configure | `<interface>`: e.g., `FastEthernet0/1`, `GigabitEthernet0/2` |
 | `switchport mode trunk` | Sets the interface to trunk mode | None |
 | `switchport trunk allowed vlan <VLAN_LIST>` | Specifies which VLANs are allowed on the trunk | `<VLAN_LIST>`: VLAN numbers (e.g., `10,20`, `all`) |
+| `switchport trunk native vlan <VLAN_ID>` | Sets the native VLAN for the trunk | `<VLAN_ID>`: VLAN number |
 
 ## Dynamic Trunking Protocol (DTP)
 
