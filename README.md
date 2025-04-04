@@ -25,4 +25,8 @@
     - [Layer 3 Switching (Inter-VLAN Routing)](vlan_configuration.md#layer-3-switching-inter-vlan-routing)
     - [Configuring Routing on a Layer 3 Switch](vlan_configuration.md#configuring-routing-on-a-layer-3-switch)
 
-
+- [Routing Configuration](routing_configuration.md).
+    - [RIP Configuration](routing_configuration.md#rip-configuration)
+    - [EIGRP Configuration](routing_configuration.md#eigrp-configuration)
+    - [OSPF Configuration](routing_configuration.md#ospf-configuration)
+    - [Additional Useful Routing Commands](routing_configuration.md#additional-useful-routing-commands)
