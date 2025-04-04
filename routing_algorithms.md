@@ -5,9 +5,9 @@ This document summarizes essential commands for configuring dynamic routing prot
 Return to the [main page](README.md) for more topics.
 
 ## Routing Protocols Covered
-- RIP (Routing Information Protocol)
-- EIGRP (Enhanced Interior Gateway Routing Protocol)
-- OSPF (Open Shortest Path First)
+- [RIP (Routing Information Protocol)](#rip-configuration)
+- [EIGRP (Enhanced Interior Gateway Routing Protocol)](#eigrp-configuration)
+- [OSPF (Open Shortest Path First)](#ospf-configuration)
 
 ---
 
