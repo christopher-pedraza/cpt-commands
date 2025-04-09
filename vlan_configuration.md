@@ -4,6 +4,21 @@ This document covers the necessary commands for configuring VLANs in Cisco Packe
 
 Return to the [main page](README.md) for more topics.
 
+## VLAN Topics Covered
+- [Creating and Managing VLANs](#creating-and-managing-vlans)
+- [Assigning VLANs to Interfaces](#assigning-vlans-to-interfaces)
+- [Configuring Voice VLAN with QoS](#configuring-voice-vlan-with-qos)
+- [Removing VLANs](#removing-vlans)
+- [Configuring Trunk Ports](#configuring-trunk-ports)
+- [Dynamic Trunking Protocol (DTP)](#dynamic-trunking-protocol-dtp)
+- [VLAN Verification Commands](#vlan-verification-commands)
+- [Inter-VLAN Routing (Router-on-a-Stick)](#inter-vlan-routing-router-on-a-stick)
+- [Layer 3 Switching (Inter-VLAN Routing)](#layer-3-switching-inter-vlan-routing)
+- [Configuring Routing on a Layer 3 Switch](#configuring-routing-on-a-layer-3-switch)
+- [IPv6 Routing Commands](#ipv6-routing-commands)
+
+---
+
 ## Creating and Managing VLANs
 
 | Command | Description | Parameters |
@@ -60,12 +75,12 @@ Return to the [main page](README.md) for more topics.
 
 ### DTP Mode Comparison Table
 
-|  | Dynamic Auto | Dynamic Desirable | Trunk | Access |
-|---|---|---|---|---|
-| **Dynamic Auto** | Access | Trunk | Trunk | Access |
-| **Dynamic Desirable** | Trunk | Trunk | Trunk | Access |
-| **Trunk** | Trunk | Trunk | Trunk | Limited Connectivity |
-| **Access** | Access | Access | Limited Connectivity | Access |
+| Local Mode | Remote Mode | Resulting Link |
+|------------|------------|---------------|
+| Dynamic Auto | Dynamic Auto | Access |
+| Dynamic Auto | Dynamic Desirable | Trunk |
+| Access | Trunk | Limited Connectivity |
+| Trunk | Trunk | Trunk |
 
 ## VLAN Verification Commands
 
@@ -105,6 +120,13 @@ Return to the [main page](README.md) for more topics.
 | `router ospf <process_id>` | Starts OSPF routing | `<process_id>`: OSPF process ID |
 | `network <IP> <wildcard> area <area_id>` | Configures OSPF networks | `<IP>`: Network IP, `<wildcard>`: Wildcard mask, `<area_id>`: OSPF area |
 | `show ip route \| begin Gateway` | Displays routing table starting from Gateway | None |
+
+## IPv6 Routing Commands
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `ipv6 unicast-routing` | Enables IPv6 routing | None |
+| `ipv6 address <IPv6>/<prefix>` | Assigns IPv6 address to an interface or SVI | `<IPv6>`: IPv6 address, `<prefix>`: Prefix length (e.g., `64`) |
 
 ---
 
