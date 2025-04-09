@@ -4,6 +4,18 @@ This document covers the fundamental commands needed to set up a Cisco device in
 
 Return to the [main page](README.md) for more topics.
 
+## Basic Topics Covered
+- [Entering Privileged and Configuration Modes](#entering-privileged-and-configuration-modes)
+- [Device Identity and Security](#device-identity-and-security)
+- [Disabling Unnecessary Features](#disabling-unnecessary-features)
+- [Saving and Viewing Configurations](#saving-and-viewing-configurations)
+- [Interface Configuration](#interface-configuration)
+- [Removing Configurations](#removing-configurations)
+- [History Commands](#history-commands)
+- [Show Command Filters](#show-command-filters)
+- [Boot and Flash Management](#boot-and-flash-management)
+- [Basic Verification Commands](#basic-verification-commands)
+
 ## Entering Privileged and Configuration Modes
 
 | Command | Description | Parameters |
@@ -74,6 +86,14 @@ Return to the [main page](README.md) for more topics.
 | `show running-config \| begin <text>` | Displays output starting from the first occurrence of `<text>` | `<text>`: Text to begin from |
 | `show running-config \| section <text>` | Displays the section that includes `<text>` | `<text>`: Section header or keyword |
 
+## Boot and Flash Management
+
+| Command | Description | Parameters |
+|---------|------------|------------|
+| `boot system flash:/<image>` | Specifies the boot image file | `<image>`: Path to the image file |
+| `show flash` | Displays the contents of the flash memory | None |
+| `boot system` | Manually boots the system | None |
+
 ## Basic Verification Commands
 
 | Command | Description | Parameters |
@@ -83,14 +103,6 @@ Return to the [main page](README.md) for more topics.
 | `ping <IP>` | Sends ICMP packets to check connectivity | `<IP>`: Destination IP address |
 | `traceroute <IP>` | Traces the route to a destination | `<IP>`: Destination IP address |
 | `show controllers ethernet-controller <interface> phy \| include MDIX` | Displays MDIX status for an interface | `<interface>`: Interface name (e.g., `fa0/1`) |
-
-## Boot and Flash Management
-
-| Command | Description | Parameters |
-|---------|------------|------------|
-| `boot system flash:/<image>` | Specifies the boot image file | `<image>`: Path to the image file |
-| `show flash` | Displays the contents of the flash memory | None |
-| `boot system` | Manually boots the system | None |
 
 ---
 
