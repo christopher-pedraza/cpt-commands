@@ -1,4 +1,4 @@
-# Routing Algorithm Configuration Commands
+# Routing Algorithm Configuration Index
 
 This document summarizes essential commands for configuring dynamic routing protocols in Cisco Packet Tracer.
 
@@ -8,6 +8,10 @@ Return to the [main page](README.md) for more topics.
 - [RIP (Routing Information Protocol)](#rip-configuration)
 - [EIGRP (Enhanced Interior Gateway Routing Protocol)](#eigrp-configuration)
 - [OSPF (Open Shortest Path First)](#ospf-configuration)
+- [IPv6 Routing](#ipv6-routing-configuration)
+  - [Static IPv6 Routing](#static-ipv6-routing)
+  - [OSPFv3 (IPv6 OSPF)](#ospfv3-ipv6-ospf)
+- [Additional Useful Routing Commands](#additional-useful-routing-commands)
 
 ---
 
