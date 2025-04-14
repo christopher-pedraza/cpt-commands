@@ -6,6 +6,9 @@ import { HeroUIProvider } from "@heroui/react";
 
 import { HashRouter, useNavigate } from "react-router";
 
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+
 import "./index.css";
 
 function HeroUIWrapper({ children }) {
@@ -15,10 +18,12 @@ function HeroUIWrapper({ children }) {
 
 createRoot(document.getElementById("root")).render(
     <HashRouter>
-        <HeroUIWrapper>
-            <main className="dark text-foreground bg-background">
-                <App />
-            </main>
-        </HeroUIWrapper>
+        <Provider store={store}>
+            <HeroUIWrapper>
+                <main className="dark text-foreground bg-background">
+                    <App />
+                </main>
+            </HeroUIWrapper>
+        </Provider>
     </HashRouter>
 );
