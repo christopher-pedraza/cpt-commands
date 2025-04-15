@@ -28,4 +28,8 @@ export const jsonSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { addFile, addFiles, removeFile, clearFiles } = jsonSlice.actions;
 
+export const selectFiles = (state) => state.json.files;
+export const selectFileById = (state, id) =>
+    state.json.files.find((file) => file.id === id);
+
 export default jsonSlice.reducer;

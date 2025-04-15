@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 
@@ -6,7 +5,7 @@ import { HeroUIProvider } from "@heroui/react";
 
 import { HashRouter, useNavigate } from "react-router";
 
-import { store } from "./app/store";
+import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 
 import "./index.css";

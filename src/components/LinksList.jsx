@@ -1,6 +1,12 @@
 import { Link } from "@heroui/link";
 
-export default function LinksList({ jsonData }) {
+import { useSelector } from "react-redux";
+import { selectFiles } from "@/redux/Slices/jsonSlice";
+
+export default function LinksList() {
+    // Get the json data from the redux store
+    const jsonData = useSelector(selectFiles);
+
     return (
         <div>
             {jsonData.map((data, index) => (
