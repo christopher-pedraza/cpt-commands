@@ -1,40 +1,103 @@
 import { useSelector } from "react-redux";
 import { selectFileById } from "@/redux/Slices/jsonSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { Card, CardBody, CardHeader, Button } from "@heroui/react";
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Table,
+    TableHeader,
+    TableBody,
+    TableColumn,
+    TableRow,
+    TableCell,
+    Button,
+    Tooltip,
+} from "@heroui/react";
+
+import { LinkIcon } from "@/icons/link";
 
 export default function Category() {
     const { category_id } = useParams();
+    const location = useLocation();
     // Get the json data from the redux store
     const sectionData = useSelector((state) =>
         selectFileById(state, category_id)
     );
 
-    // print the section data to the console
+    // Scroll to the section if a hash is present in the URL
     useEffect(() => {
-        console.log(sectionData);
-    }, [sectionData]);
+        if (location.hash) {
+            const sectionId = location.hash.substring(1); // Remove the '#' from the hash
+            const sectionElement = document.getElementById(sectionId);
+            if (sectionElement) {
+                sectionElement.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [location.hash]);
+
+    const copySectionLink = (sectionId) => {
+        const link = `${window.location.origin}${location.pathname}#${sectionId}`;
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Link copied to clipboard!");
+        });
+    };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
-            <Button>Hola</Button>
-            <Card fullWidth>
-                <CardHeader className="text-xl font-bold">
-                    {sectionData?.title}
-                </CardHeader>
-                <CardBody className="flex flex-col">
-                    {sectionData?.sections.map((section, index) => (
-                        <div key={index} className="m-2">
-                            <h2 className="text-lg font-bold">
+        <div className="flex flex-col items-center justify-center">
+            <div className="w-3/4 flex flex-col items-center justify-center">
+                <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
+                {sectionData?.sections.map((section, index) => (
+                    <Card
+                        fullWidth
+                        key={index}
+                        className="mb-4 mt-4 p-2"
+                        id={section.id}
+                    >
+                        <CardHeader className="text-xl font-bold">
+                            <Button
+                                className="bg-clear text-xl font-bold"
+                                startContent={<LinkIcon />}
+                                disableRipple
+                                onPress={() => copySectionLink(section.id)}
+                            >
                                 {section.title}
-                            </h2>
-                            <p>{section.description}</p>
-                        </div>
-                    ))}
-                </CardBody>
-            </Card>
+                            </Button>
+                        </CardHeader>
+                        <CardBody className="flex flex-col">
+                            <Table key={index}>
+                                <TableHeader>
+                                    <TableColumn>Command</TableColumn>
+                                    <TableColumn>Description</TableColumn>
+                                    <TableColumn>Parameters</TableColumn>
+                                </TableHeader>
+                                <TableBody>
+                                    {section?.commands.map((command, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                {command.command}
+                                            </TableCell>
+                                            <TableCell>
+                                                {command.description}
+                                            </TableCell>
+                                            <TableCell>
+                                                {command.parameters.map(
+                                                    (parameter, index) => (
+                                                        <div key={index}>
+                                                            {parameter}
+                                                        </div>
+                                                    )
+                                                )}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </CardBody>
+                    </Card>
+                ))}
+            </div>
         </div>
     );
 }

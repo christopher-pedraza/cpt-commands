@@ -14,7 +14,7 @@ export default function LinksList() {
                     <Link href={`${data.id}`}>{data.title}</Link>
                     {data.sections.map((section, index) => (
                         <div key={index} className="ml-4">
-                            <Link href={`${data.id}\#${section.id}`}>
+                            <Link href={`${data.id}#${section.id}`}>
                                 {section.title}
                             </Link>
                         </div>
