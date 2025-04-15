@@ -10,9 +10,16 @@ export default function LinksList() {
     return (
         <div>
             {jsonData.map((data, index) => (
-                <Link href={`${data.id}`} key={index}>
-                    {data.title}
-                </Link>
+                <div key={index}>
+                    <Link href={`${data.id}`}>{data.title}</Link>
+                    {data.sections.map((section, index) => (
+                        <div key={index} className="ml-4">
+                            <Link href={`${data.id}\#${section.id}`}>
+                                {section.title}
+                            </Link>
+                        </div>
+                    ))}
+                </div>
             ))}
         </div>
     );

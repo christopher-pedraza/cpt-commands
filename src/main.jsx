@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 
 function HeroUIWrapper({ children }) {
-    const navigate = useNavigate(); // ✅ Correct usage inside a functional component
+    const navigate = useNavigate();
     return <HeroUIProvider navigate={navigate}>{children}</HeroUIProvider>;
 }
 

@@ -22,11 +22,29 @@ export const jsonSlice = createSlice({
         clearFiles: (state) => {
             state.files = [];
         },
+        setFiles: (state, action) => {
+            state.files = action.payload;
+        },
+        updateFile: (state, action) => {
+            const index = state.files.findIndex(
+                (file) => file.id === action.payload.id
+            );
+            if (index !== -1) {
+                state.files[index] = action.payload;
+            }
+        },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { addFile, addFiles, removeFile, clearFiles } = jsonSlice.actions;
+export const {
+    addFile,
+    addFiles,
+    removeFile,
+    clearFiles,
+    setFiles,
+    updateFile,
+} = jsonSlice.actions;
 
 export const selectFiles = (state) => state.json.files;
 export const selectFileById = (state, id) =>

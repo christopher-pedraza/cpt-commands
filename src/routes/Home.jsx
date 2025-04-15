@@ -1,6 +1,6 @@
 import LinksList from "@/components/LinksList";
 import { useDispatch } from "react-redux";
-import { addFiles } from "@/redux/Slices/jsonSlice";
+import { setFiles } from "@/redux/Slices/jsonSlice";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -9,10 +9,10 @@ export default function Home() {
     const jsonData = Object.values(jsonFiles).map((file) => file.default);
 
     // dispatch the json data to the redux store
-    dispatch(addFiles(jsonData));
+    dispatch(setFiles(jsonData));
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center h-screen">
             <LinksList />
         </div>
     );
