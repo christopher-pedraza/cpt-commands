@@ -13,7 +13,7 @@ import {
     TableRow,
     TableCell,
     Button,
-    Tooltip,
+    addToast,
 } from "@heroui/react";
 
 import { LinkIcon } from "@/icons/link";
@@ -38,9 +38,18 @@ export default function Category() {
     }, [location.hash]);
 
     const copySectionLink = (sectionId) => {
-        const link = `${window.location.origin}${location.pathname}#${sectionId}`;
+        const base = import.meta.env.BASE_URL; // Get the base path from Vite config
+        const link = `${
+            window.location.origin
+        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
         navigator.clipboard.writeText(link).then(() => {
-            alert("Link copied to clipboard!");
+            addToast({
+                title: "Link copied to clipboard!",
+                timeout: 2000,
+                hideIcon: true,
+                color: "success",
+                className: "dark text-foreground bg-background",
+            });
         });
     };
 
