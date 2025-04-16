@@ -1,0 +1,261 @@
+{
+    "title": "Basic Configuration Commands",
+    "id": "basic-configuration",
+    "description": "This document covers the fundamental commands needed to set up a Cisco device in Packet Tracer.",
+    "sections": [
+        {
+            "id": "entering-privileged-and-configuration-modes",
+            "title": "Entering Privileged and Configuration Modes",
+            "commands": [
+                {
+                    "command": "enable",
+                    "description": "Enters privileged EXEC mode",
+                    "parameters": []
+                },
+                {
+                    "command": "configure terminal",
+                    "description": "Enters global configuration mode",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "device-identity-and-security",
+            "title": "Device Identity and Security",
+            "commands": [
+                {
+                    "command": "hostname <name>",
+                    "description": "Sets the device hostname",
+                    "parameters": ["<name>: Desired hostname"]
+                },
+                {
+                    "command": "service password-encryption",
+                    "description": "Encrypts all passwords stored in the configuration file",
+                    "parameters": []
+                },
+                {
+                    "command": "enable secret <password>",
+                    "description": "Sets an encrypted privileged mode password",
+                    "parameters": [
+                        "<password>: Password for privileged EXEC mode"
+                    ]
+                },
+                {
+                    "command": "banner motd #<message>#",
+                    "description": "Sets a Message of the Day (MOTD) banner",
+                    "parameters": ["<message>: The message inside delimiters"]
+                }
+            ]
+        },
+        {
+            "id": "disabling-unnecessary-features",
+            "title": "Disabling Unnecessary Features",
+            "commands": [
+                {
+                    "command": "no ip domain-lookup",
+                    "description": "Prevents the router from trying to resolve unknown commands as hostnames",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "saving-and-viewing-configurations",
+            "title": "Saving and Viewing Configurations",
+            "commands": [
+                {
+                    "command": "copy running-config startup-config",
+                    "description": "Saves the current configuration to the startup file",
+                    "parameters": []
+                },
+                {
+                    "command": "show running-config",
+                    "description": "Displays the current running configuration",
+                    "parameters": []
+                },
+                {
+                    "command": "show startup-config",
+                    "description": "Displays the startup configuration stored in NVRAM",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "interface-configuration",
+            "title": "Interface Configuration",
+            "commands": [
+                {
+                    "command": "interface <interface>",
+                    "description": "Selects an interface to configure",
+                    "parameters": [
+                        "<interface>: e.g., FastEthernet0/0, GigabitEthernet0/1"
+                    ]
+                },
+                {
+                    "command": "ip address <IP> <subnet>",
+                    "description": "Assigns an IP address to the interface",
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                },
+                {
+                    "command": "no shutdown",
+                    "description": "Enables the interface",
+                    "parameters": []
+                },
+                {
+                    "command": "description <text>",
+                    "description": "Adds a description to an interface",
+                    "parameters": ["<text>: Description"]
+                },
+                {
+                    "command": "duplex <full|half|auto>",
+                    "description": "Sets the duplex mode",
+                    "parameters": ["full", "half", "auto"]
+                },
+                {
+                    "command": "speed <10|100|1000|auto>",
+                    "description": "Sets the interface speed",
+                    "parameters": ["10", "100", "1000", "auto"]
+                },
+                {
+                    "command": "mdix auto",
+                    "description": "Enables automatic crossover detection",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "removing-configurations",
+            "title": "Removing Configurations",
+            "commands": [
+                {
+                    "command": "erase startup-config",
+                    "description": "Erases the startup configuration stored in NVRAM",
+                    "parameters": []
+                },
+                {
+                    "command": "delete vlan.dat",
+                    "description": "Deletes the VLAN database file",
+                    "parameters": []
+                },
+                {
+                    "command": "reload",
+                    "description": "Reboots the device to apply changes",
+                    "parameters": []
+                },
+                {
+                    "command": "default interface <interface>",
+                    "description": "Resets an interface to its default settings",
+                    "parameters": ["<interface>: Interface to reset"]
+                },
+                {
+                    "command": "no hostname",
+                    "description": "Removes the configured hostname, reverting to default",
+                    "parameters": []
+                },
+                {
+                    "command": "no enable secret",
+                    "description": "Removes the privileged EXEC mode password",
+                    "parameters": []
+                },
+                {
+                    "command": "no banner motd",
+                    "description": "Removes the configured Message of the Day banner",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "history-commands",
+            "title": "History Commands",
+            "commands": [
+                {
+                    "command": "show history",
+                    "description": "Displays the command history",
+                    "parameters": []
+                },
+                {
+                    "command": "terminal history size <size>",
+                    "description": "Modifies the number of stored history commands",
+                    "parameters": ["<size>: Number of commands to store"]
+                }
+            ]
+        },
+        {
+            "id": "show-command-filters",
+            "title": "Show Command Filters",
+            "commands": [
+                {
+                    "command": "show running-config | include <text>",
+                    "description": "Displays only lines that contain <text>",
+                    "parameters": ["<text>: Text to match"]
+                },
+                {
+                    "command": "show running-config | exclude <text>",
+                    "description": "Displays all lines except those containing <text>",
+                    "parameters": ["<text>: Text to exclude"]
+                },
+                {
+                    "command": "show running-config | begin <text>",
+                    "description": "Displays output starting from the first occurrence of <text>",
+                    "parameters": ["<text>: Text to begin from"]
+                },
+                {
+                    "command": "show running-config | section <text>",
+                    "description": "Displays the section that includes <text>",
+                    "parameters": ["<text>: Section header or keyword"]
+                }
+            ]
+        },
+        {
+            "id": "boot-and-flash-management",
+            "title": "Boot and Flash Management",
+            "commands": [
+                {
+                    "command": "boot system flash:/<image>",
+                    "description": "Specifies the boot image file",
+                    "parameters": ["<image>: Path to the image file"]
+                },
+                {
+                    "command": "show flash",
+                    "description": "Displays the contents of the flash memory",
+                    "parameters": []
+                },
+                {
+                    "command": "boot system",
+                    "description": "Manually boots the system",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "basic-verification-commands",
+            "title": "Basic Verification Commands",
+            "commands": [
+                {
+                    "command": "show ip interface brief",
+                    "description": "Displays a summary of interfaces, IP addresses, and statuses",
+                    "parameters": []
+                },
+                {
+                    "command": "show version",
+                    "description": "Displays system version, uptime, and hardware details",
+                    "parameters": []
+                },
+                {
+                    "command": "ping <IP>",
+                    "description": "Sends ICMP packets to check connectivity",
+                    "parameters": ["<IP>: Destination IP address"]
+                },
+                {
+                    "command": "traceroute <IP>",
+                    "description": "Traces the route to a destination",
+                    "parameters": ["<IP>: Destination IP address"]
+                },
+                {
+                    "command": "show controllers ethernet-controller <interface> phy | include MDIX",
+                    "description": "Displays MDIX status for an interface",
+                    "parameters": ["<interface>: Interface name (e.g., fa0/1)"]
+                }
+            ]
+        }
+    ]
+}
