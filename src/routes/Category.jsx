@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectFileById } from "@/redux/Slices/jsonSlice";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import {
     Card,
@@ -17,7 +17,8 @@ import {
 } from "@heroui/react";
 import BackToUp from "@uiw/react-back-to-top";
 
-import { LinkIcon } from "@/icons/link";
+import { LinkIcon } from "@/icons/LinkIcon";
+import { BackIcon } from "@/icons/BackIcon";
 
 export default function Category() {
     const { category_id } = useParams();
@@ -26,6 +27,8 @@ export default function Category() {
     const sectionData = useSelector((state) =>
         selectFileById(state, category_id)
     );
+    const navigate = useNavigate();
+    const base = import.meta.env.BASE_URL;
 
     // Scroll to the section if a hash is present in the URL
     useEffect(() => {
@@ -38,11 +41,9 @@ export default function Category() {
         }
     }, [location.hash]);
 
-    const copySectionLink = (sectionId) => {
-        const base = import.meta.env.BASE_URL; // Get the base path from Vite config
-        const link = `${
-            window.location.origin
-        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
+    const copyAndAlert = (link) => {
+        window.history.replaceState(null, "", link);
+
         navigator.clipboard.writeText(link).then(() => {
             addToast({
                 title: "Link copied to clipboard!",
@@ -54,10 +55,41 @@ export default function Category() {
         });
     };
 
+    const copySectionLink = (sectionId) => {
+        const link = `${
+            window.location.origin
+        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
+        copyAndAlert(link);
+    };
+
+    const copyCategoryLink = () => {
+        const link = `${
+            window.location.origin
+        }${base}#/${location.pathname.substring(1)}`;
+        copyAndAlert(link);
+    };
+
+    const returnToHome = () => {
+        navigate(`/`);
+    };
+
     return (
         <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-start w-3/4">
+                <Button startContent={<BackIcon />} onPress={returnToHome}>
+                    Return
+                </Button>
+            </div>
             <div className="w-3/4 flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
+                <Button
+                    className="bg-clear text-xl font-bold truncate"
+                    startContent={<LinkIcon />}
+                    disableRipple
+                    onPress={() => copyCategoryLink()}
+                >
+                    <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
+                </Button>
+
                 {sectionData?.sections.map((section, index) => (
                     <Card
                         fullWidth
