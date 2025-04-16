@@ -15,6 +15,7 @@ import {
     Button,
     addToast,
 } from "@heroui/react";
+import BackToUp from "@uiw/react-back-to-top";
 
 import { LinkIcon } from "@/icons/link";
 
@@ -25,8 +26,6 @@ export default function Category() {
     const sectionData = useSelector((state) =>
         selectFileById(state, category_id)
     );
-
-    const columnWidth = 30;
 
     // Scroll to the section if a hash is present in the URL
     useEffect(() => {
@@ -77,16 +76,20 @@ export default function Category() {
                             </Button>
                         </CardHeader>
                         <CardBody className="flex flex-col">
-                            <Table key={index}>
+                            <Table key={index} isStriped>
                                 <TableHeader>
-                                    <TableColumn maxWidth={columnWidth}>
-                                        Command
+                                    <TableColumn>
+                                        <span className="text-lg">Command</span>
                                     </TableColumn>
-                                    <TableColumn maxWidth={columnWidth}>
-                                        Description
+                                    <TableColumn>
+                                        <span className="text-lg">
+                                            Description
+                                        </span>
                                     </TableColumn>
-                                    <TableColumn maxWidth={columnWidth}>
-                                        Parameters
+                                    <TableColumn>
+                                        <span className="text-lg">
+                                            Parameters
+                                        </span>
                                     </TableColumn>
                                 </TableHeader>
                                 <TableBody>
@@ -115,6 +118,7 @@ export default function Category() {
                     </Card>
                 ))}
             </div>
+            <BackToUp>Top</BackToUp>
         </div>
     );
 }

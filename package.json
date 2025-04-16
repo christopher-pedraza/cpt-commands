@@ -12,6 +12,7 @@
     "dependencies": {
         "@heroui/react": "^2.7.6",
         "@reduxjs/toolkit": "^2.6.1",
+        "@uiw/react-back-to-top": "^1.2.3",
         "framer-motion": "^12.7.3",
         "prop-types": "^15.8.1",
         "react": "^19.1.0",
