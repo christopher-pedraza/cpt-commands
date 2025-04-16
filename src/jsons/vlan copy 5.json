@@ -1,0 +1,528 @@
+{
+    "title": "VLAN Configuration Commands",
+    "id": "test",
+    "description": "This document covers the necessary commands for configuring VLANs in Cisco Packet Tracer.",
+    "sections": [
+        {
+            "id": "creating-and-managing-vlans",
+            "title": "Creating and Managing VLANs",
+            "commands": [
+                {
+                    "command": "vlan <VLAN_ID>",
+                    "description": "Creates a VLAN and enters VLAN configuration mode",
+                    "parameters": ["<VLAN_ID>: VLAN number (1-4094)"]
+                },
+                {
+                    "command": "name <VLAN_NAME>",
+                    "description": "Assigns a name to a VLAN",
+                    "parameters": ["<VLAN_NAME>: Descriptive name"]
+                },
+                {
+                    "command": "exit",
+                    "description": "Exits VLAN configuration mode",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "assigning-vlans-to-interfaces",
+            "title": "Assigning VLANs to Interfaces",
+            "commands": [
+                {
+                    "command": "interface <interface>",
+                    "description": "Selects an interface to configure",
+                    "parameters": [
+                        "<interface>: e.g., FastEthernet0/1, GigabitEthernet0/2"
+                    ]
+                },
+                {
+                    "command": "switchport mode access",
+                    "description": "Sets the interface to access mode (for end devices)",
+                    "parameters": []
+                },
+                {
+                    "command": "switchport access vlan <VLAN_ID>",
+                    "description": "Assigns the VLAN to the interface",
+                    "parameters": ["<VLAN_ID>: VLAN number"]
+                }
+            ]
+        },
+        {
+            "id": "configuring-voice-vlan-with-qos",
+            "title": "Configuring Voice VLAN with QoS",
+            "commands": [
+                {
+                    "command": "vlan <VLAN_ID>",
+                    "description": "Creates a VLAN",
+                    "parameters": ["<VLAN_ID>: VLAN number"]
+                },
+                {
+                    "command": "name <VLAN_NAME>",
+                    "description": "Names the VLAN",
+                    "parameters": ["<VLAN_NAME>: VLAN name"]
+                },
+                {
+                    "command": "interface <interface>",
+                    "description": "Selects an interface",
+                    "parameters": ["<interface>: e.g., FastEthernet0/18"]
+                },
+                {
+                    "command": "switchport mode access",
+                    "description": "Sets interface as access mode",
+                    "parameters": []
+                },
+                {
+                    "command": "switchport access vlan <VLAN_ID>",
+                    "description": "Assigns VLAN to interface",
+                    "parameters": ["<VLAN_ID>: VLAN number"]
+                },
+                {
+                    "command": "mls qos trust cos",
+                    "description": "Enables QoS trusting CoS values",
+                    "parameters": []
+                },
+                {
+                    "command": "switchport voice vlan <VLAN_ID>",
+                    "description": "Assigns a voice VLAN to the interface",
+                    "parameters": ["<VLAN_ID>: Voice VLAN number"]
+                }
+            ]
+        },
+
+        {
+            "id": "dynamic-trunking-protocol-dtp",
+            "title": "Dynamic Trunking Protocol (DTP)",
+            "commands": [
+                {
+                    "command": "switchport nonegotiate",
+                    "description": "Disables DTP negotiation",
+                    "parameters": []
+                },
+                {
+                    "command": "switchport mode dynamic auto",
+                    "description": "Sets port to auto mode",
+                    "parameters": []
+                },
+                {
+                    "command": "switchport mode {access | dynamic {auto | desirable} | trunk}",
+                    "description": "Configures DTP mode",
+                    "parameters": ["Access, Auto, Desirable, Trunk"]
+                },
+                {
+                    "command": "show dtp interface <interface>",
+                    "description": "Displays DTP status for an interface",
+                    "parameters": ["<interface>: Interface name"]
+                }
+            ],
+            "tables": [
+                {
+                    "title": "DTP Mode Comparison Table",
+                    "headers": [
+                        "",
+                        "Dynamic Auto",
+                        "Dynamic Desirable",
+                        "Trunk",
+                        "Access"
+                    ],
+                    "rows": [
+                        ["Dynamic Auto", "Access", "Trunk", "Trunk", "Access"],
+                        [
+                            "Dynamic Desirable",
+                            "Trunk",
+                            "Trunk",
+                            "Trunk",
+                            "Access"
+                        ],
+                        [
+                            "Trunk",
+                            "Trunk",
+                            "Trunk",
+                            "Trunk",
+                            "Limited Connectivity"
+                        ],
+                        [
+                            "Access",
+                            "Access",
+                            "Access",
+                            "Limited Connectivity",
+                            "Access"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "vlan-verification-commands",
+            "title": "VLAN Verification Commands",
+            "commands": [
+                {
+                    "command": "show vlan brief",
+                    "description": "Displays VLANs and their assigned interfaces",
+                    "parameters": []
+                },
+                {
+                    "command": "show interfaces trunk",
+                    "description": "Displays trunked interfaces and allowed VLANs",
+                    "parameters": []
+                },
+                {
+                    "command": "show mac address-table",
+                    "description": "Displays the MAC address table and VLAN associations",
+                    "parameters": []
+                },
+                {
+                    "command": "show spanning-tree",
+                    "description": "Displays Spanning Tree Protocol (STP) details",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "inter-vlan-routing-router-on-a-stick",
+            "title": "Inter-VLAN Routing (Router-on-a-Stick)",
+            "commands": [
+                {
+                    "command": "interface <interface>.<subinterface>",
+                    "description": "Creates a subinterface for inter-VLAN routing",
+                    "parameters": [
+                        "<interface>: Physical interface",
+                        "<subinterface>: Subinterface number"
+                    ]
+                },
+                {
+                    "command": "encapsulation dot1q <VLAN_ID>",
+                    "description": "Assigns a VLAN tag to the subinterface",
+                    "parameters": ["<VLAN_ID>: VLAN number"]
+                },
+                {
+                    "command": "ip address <IP> <subnet>",
+                    "description": "Assigns an IP address to the subinterface",
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                }
+            ]
+        },
+        {
+            "id": "layer-3-switching-inter-vlan-routing",
+            "title": "Layer 3 Switching (Inter-VLAN Routing)",
+            "commands": [
+                {
+                    "command": "interface vlan <VLAN_ID>",
+                    "description": "Creates a Layer 3 SVI",
+                    "parameters": ["<VLAN_ID>: VLAN number"]
+                },
+                {
+                    "command": "ip address <IP> <subnet>",
+                    "description": "Assigns an IP to the VLAN SVI",
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                },
+                {
+                    "command": "no shut",
+                    "description": "Enables the interface",
+                    "parameters": []
+                },
+                {
+                    "command": "ip routing",
+                    "description": "Enables Layer 3 routing",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "configuring-routing-on-a-layer-3-switch",
+            "title": "Configuring Routing on a Layer 3 Switch",
+            "commands": [
+                {
+                    "command": "interface <interface>",
+                    "description": "Selects an interface",
+                    "parameters": ["<interface>: e.g., GigabitEthernet0/0/1"]
+                },
+                {
+                    "command": "no switchport",
+                    "description": "Converts the port to Layer 3 mode",
+                    "parameters": []
+                },
+                {
+                    "command": "ip address <IP> <subnet>",
+                    "description": "Assigns an IP address",
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                },
+                {
+                    "command": "no shut",
+                    "description": "Enables the interface",
+                    "parameters": []
+                },
+                {
+                    "command": "ip routing",
+                    "description": "Enables Layer 3 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "router ospf <process_id>",
+                    "description": "Starts OSPF routing",
+                    "parameters": ["<process_id>: OSPF process ID"]
+                },
+                {
+                    "command": "network <IP> <wildcard> area <area_id>",
+                    "description": "Configures OSPF networks",
+                    "parameters": [
+                        "<IP>: Network IP",
+                        "<wildcard>: Wildcard mask",
+                        "<area_id>: OSPF area"
+                    ]
+                },
+                {
+                    "command": "show ip route | begin Gateway",
+                    "description": "Displays routing table starting from Gateway",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipv6-routing-commands",
+            "title": "IPv6 Routing Commands",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing",
+                    "parameters": []
+                },
+                {
+                    "command": "ipv6 address <IPv6>/<prefix>",
+                    "description": "Assigns IPv6 address to an interface or SVI",
+                    "parameters": [
+                        "<IPv6>: IPv6 address",
+                        "<prefix>: Prefix length (e.g., 64)"
+                    ]
+                }
+            ]
+        }
+    ]
+}

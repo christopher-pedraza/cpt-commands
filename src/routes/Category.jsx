@@ -26,6 +26,8 @@ export default function Category() {
         selectFileById(state, category_id)
     );
 
+    const columnWidth = 30;
+
     // Scroll to the section if a hash is present in the URL
     useEffect(() => {
         if (location.hash) {
@@ -66,7 +68,7 @@ export default function Category() {
                     >
                         <CardHeader className="text-xl font-bold">
                             <Button
-                                className="bg-clear text-xl font-bold"
+                                className="bg-clear text-xl font-bold truncate"
                                 startContent={<LinkIcon />}
                                 disableRipple
                                 onPress={() => copySectionLink(section.id)}
@@ -77,9 +79,15 @@ export default function Category() {
                         <CardBody className="flex flex-col">
                             <Table key={index}>
                                 <TableHeader>
-                                    <TableColumn>Command</TableColumn>
-                                    <TableColumn>Description</TableColumn>
-                                    <TableColumn>Parameters</TableColumn>
+                                    <TableColumn maxWidth={columnWidth}>
+                                        Command
+                                    </TableColumn>
+                                    <TableColumn maxWidth={columnWidth}>
+                                        Description
+                                    </TableColumn>
+                                    <TableColumn maxWidth={columnWidth}>
+                                        Parameters
+                                    </TableColumn>
                                 </TableHeader>
                                 <TableBody>
                                     {section?.commands.map((command, index) => (
