@@ -10,32 +10,38 @@
                 {
                     "command": "router rip",
                     "description": "Enters RIP configuration mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "version 2",
                     "description": "Enables RIP version 2 (recommended)",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "network <network>",
                     "description": "Specifies which network(s) to advertise",
-                    "parameters": ["<network>: e.g., 192.168.1.0"]
+                    "parameters": ["<network>: e.g., 192.168.1.0"],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "no auto-summary",
                     "description": "Disables automatic summarization",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "show ip protocols",
                     "description": "Displays routing protocol information",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip route rip",
                     "description": "Displays routes learned via RIP",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -48,32 +54,38 @@
                     "description": "Enters EIGRP configuration mode",
                     "parameters": [
                         "<ASN>: Autonomous System Number (e.g., 100)"
-                    ]
+                    ],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "network <network>",
                     "description": "Specifies which network(s) to advertise",
-                    "parameters": ["<network>: e.g., 192.168.1.0"]
+                    "parameters": ["<network>: e.g., 192.168.1.0"],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "no auto-summary",
                     "description": "Disables automatic summarization",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "show ip protocols",
                     "description": "Displays routing protocol info",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip route eigrp",
                     "description": "Shows EIGRP-learned routes",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip eigrp neighbors",
                     "description": "Shows EIGRP neighbor relationships",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -84,7 +96,8 @@
                 {
                     "command": "router ospf <process_id>",
                     "description": "Enters OSPF router configuration mode",
-                    "parameters": ["<process_id>: Any number (e.g., 1)"]
+                    "parameters": ["<process_id>: Any number (e.g., 1)"],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "network <IP> <wildcard> area <area_id>",
@@ -93,27 +106,32 @@
                         "<IP>: Network IP",
                         "<wildcard>: Wildcard mask",
                         "<area_id>: Area number (e.g., 0)"
-                    ]
+                    ],
+                    "mode": "(config-router)#"
                 },
                 {
                     "command": "show ip protocols",
                     "description": "Displays active routing protocols",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip ospf neighbor",
                     "description": "Displays OSPF neighbors",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip route ospf",
                     "description": "Shows routes learned through OSPF",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ip ospf",
                     "description": "Displays general OSPF process info",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -124,12 +142,14 @@
                 {
                     "command": "ipv6 unicast-routing",
                     "description": "Enables IPv6 routing on the router or Layer 3 switch",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "interface <interface>",
                     "description": "Selects an interface to configure",
-                    "parameters": ["<interface>: e.g., GigabitEthernet0/0"]
+                    "parameters": ["<interface>: e.g., GigabitEthernet0/0"],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "ipv6 address <ipv6_addr>/<prefix>",
@@ -137,27 +157,32 @@
                     "parameters": [
                         "<ipv6_addr>: e.g., 2001:db8:1::1",
                         "<prefix>: e.g., 64"
-                    ]
+                    ],
+                    "mode": "(config-if)#"
                 },
                 {
                     "command": "show ipv6 route",
                     "description": "Displays the IPv6 routing table",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ipv6 protocols",
                     "description": "Displays IPv6 routing protocol information",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ipv6 interface brief",
                     "description": "Displays summary of IPv6-enabled interfaces",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show ipv6 neighbors",
                     "description": "Displays the IPv6 neighbor cache",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ],
             "subsections": [
@@ -171,7 +196,8 @@
                             "parameters": [
                                 "<destination>: e.g., 2001:db8:2::/64",
                                 "<next-hop>: e.g., 2001:db8:1::2"
-                            ]
+                            ],
+                            "mode": "(config)#"
                         }
                     ]
                 },
@@ -182,19 +208,22 @@
                         {
                             "command": "ipv6 router ospf <process_id>",
                             "description": "Enters OSPFv3 configuration mode",
-                            "parameters": ["<process_id>: e.g., 1"]
+                            "parameters": ["<process_id>: e.g., 1"],
+                            "mode": "(config)#"
                         },
                         {
                             "command": "router-id <id>",
                             "description": "Assigns a router ID",
-                            "parameters": ["<id>: e.g., 1.1.1.1"]
+                            "parameters": ["<id>: e.g., 1.1.1.1"],
+                            "mode": "(config-rtr)#"
                         },
                         {
                             "command": "interface <interface>",
                             "description": "Enters interface mode for OSPFv3",
                             "parameters": [
                                 "<interface>: e.g., GigabitEthernet0/0"
-                            ]
+                            ],
+                            "mode": "(config)#"
                         },
                         {
                             "command": "ipv6 ospf <process_id> area <area_id>",
@@ -202,7 +231,8 @@
                             "parameters": [
                                 "<process_id>: e.g., 1",
                                 "<area_id>: e.g., 0"
-                            ]
+                            ],
+                            "mode": "(config-if)#"
                         }
                     ]
                 }
@@ -215,17 +245,20 @@
                 {
                     "command": "ip routing",
                     "description": "Enables IP routing on Layer 3 devices",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "(config)#"
                 },
                 {
                     "command": "show ip route",
                     "description": "Shows the IP routing table",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "clear ip route *",
                     "description": "Clears routing table entries",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         }

@@ -1,0 +1,131 @@
+{
+    "title": "IP Address Assignment Configuration",
+    "id": "ip-address-assignment",
+    "description": "This document includes commands for configuring automatic IP address assignment.",
+    "sections": [
+        {
+            "id": "dhcpv4-configuration",
+            "title": "DHCPv4 Configuration",
+            "commands": [
+                {
+                    "command": "ip dhcp excluded-address <low-address> [<high-address>]",
+                    "description": "Excludes a range or single IPv4 address from being assigned by the DHCP server.",
+                    "parameters": [
+                        "<low-address>: First IP address in the excluded range",
+                        "[<high-address>]: Optional last IP address in the range"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ip dhcp pool <pool-name>",
+                    "description": "Creates a DHCPv4 pool and enters DHCP pool configuration mode.",
+                    "parameters": ["<pool-name>: Name of the DHCP pool"],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "network <network-number> [<mask> | /<prefix-length>]",
+                    "description": "Defines the range of addresses that the DHCP server can assign.",
+                    "parameters": [
+                        "<network-number>: Network address",
+                        "[<mask> | /<prefix-length>]: Subnet mask or prefix"
+                    ],
+                    "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "default-router <address> [<address2> ... <address8>]",
+                    "description": "Specifies the default gateway for the DHCP clients.",
+                    "parameters": [
+                        "<address>: Default gateway IP",
+                        "[<address2> ... <address8>]: Optional additional gateways"
+                    ],
+                    "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "dns-server <address> [<address2> ... <address8>]",
+                    "description": "Specifies one or more DNS servers for the DHCP clients.",
+                    "parameters": [
+                        "<address>: Primary DNS server IP",
+                        "[<address2> ... <address8>]: Optional additional DNS servers"
+                    ],
+                    "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "domain-name <domain>",
+                    "description": "Specifies the domain name for the DHCP clients.",
+                    "parameters": ["<domain>: Domain name (e.g., example.com)"],
+                    "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "lease <days> [<hours> [<minutes>]] | infinite",
+                    "description": "Specifies the lease duration for assigned addresses. Not available in Packet Tracer.",
+                    "parameters": [
+                        "<days>: Number of days",
+                        "[<hours>]: Optional hours",
+                        "[<minutes>]: Optional minutes",
+                        "infinite: Lease never expires"
+                    ],
+                    "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "netbios-name-server <address> [<address2> ... <address8>]",
+                    "description": "Specifies the NetBIOS WINS server for legacy clients. Not available in Packet Tracer.",
+                    "parameters": [
+                        "<address>: Primary NetBIOS server IP",
+                        "[<address2> ... <address8>]: Optional additional NetBIOS servers"
+                    ],
+                    "mode": "(dhcp-config)#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv4-verification",
+            "title": "DHCPv4 Verification",
+            "commands": [
+                {
+                    "command": "show running-config | section dhcp",
+                    "description": "Displays the DHCPv4-related configuration in the running config.",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "show ip dhcp binding",
+                    "description": "Shows all DHCPv4 address-to-MAC address bindings.",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "show ip dhcp server statistics",
+                    "description": "Displays DHCPv4 message counts sent and received.",
+                    "parameters": [],
+                    "mode": "#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv4-additional-options",
+            "title": "DHCPv4 Additional Options",
+            "commands": [
+                {
+                    "command": "no service dhcp",
+                    "description": "Disables the DHCP server feature on the router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "service dhcp",
+                    "description": "Enables the DHCP server feature on the router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ip helper-address <ip-address>",
+                    "description": "Forwards DHCP requests to the DHCP server at the specified address.",
+                    "parameters": [
+                        "<ip-address>: IP address of the DHCP server"
+                    ],
+                    "mode": "(config-if)#"
+                }
+            ]
+        }
+    ]
+}
