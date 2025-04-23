@@ -100,12 +100,28 @@
                     "mode": "(config)#"
                 },
                 {
+                    "command": "router-id <id>",
+                    "description": "Sets the OSPF router ID",
+                    "parameters": [
+                        "<id>: Router ID in IP address format (e.g., 1.1.1.1)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
                     "command": "network <IP> <wildcard> area <area_id>",
                     "description": "Advertises a network in a specific OSPF area",
                     "parameters": [
                         "<IP>: Network IP",
                         "<wildcard>: Wildcard mask",
                         "<area_id>: Area number (e.g., 0)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
+                    "command": "passive-interface <interface>",
+                    "description": "Prevents OSPF from sending updates out of the specified interface",
+                    "parameters": [
+                        "<interface>: Interface name (e.g., GigabitEthernet0/0)"
                     ],
                     "mode": "(config-router)#"
                 },
@@ -130,6 +146,12 @@
                 {
                     "command": "show ip ospf",
                     "description": "Displays general OSPF process info",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "clear ip ospf process",
+                    "description": "Restarts the OSPF process, clearing all OSPF states",
                     "parameters": [],
                     "mode": "#"
                 }
