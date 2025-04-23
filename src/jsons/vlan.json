@@ -10,17 +10,20 @@
                 {
                     "command": "vlan <VLAN_ID>",
                     "description": "Creates a VLAN and enters VLAN configuration mode",
-                    "parameters": ["<VLAN_ID>: VLAN number (1-4094)"]
+                    "parameters": ["<VLAN_ID>: VLAN number (1-4094)"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "name <VLAN_NAME>",
                     "description": "Assigns a name to a VLAN",
-                    "parameters": ["<VLAN_NAME>: Descriptive name"]
+                    "parameters": ["<VLAN_NAME>: Descriptive name"],
+                    "mode": "#(config-vlan)"
                 },
                 {
                     "command": "exit",
                     "description": "Exits VLAN configuration mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-vlan)"
                 }
             ]
         },
@@ -33,17 +36,20 @@
                     "description": "Selects an interface to configure",
                     "parameters": [
                         "<interface>: e.g., FastEthernet0/1, GigabitEthernet0/2"
-                    ]
+                    ],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "switchport mode access",
                     "description": "Sets the interface to access mode (for end devices)",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport access vlan <VLAN_ID>",
                     "description": "Assigns the VLAN to the interface",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config-if)"
                 }
             ]
         },
@@ -54,37 +60,44 @@
                 {
                     "command": "vlan <VLAN_ID>",
                     "description": "Creates a VLAN",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "name <VLAN_NAME>",
                     "description": "Names the VLAN",
-                    "parameters": ["<VLAN_NAME>: VLAN name"]
+                    "parameters": ["<VLAN_NAME>: VLAN name"],
+                    "mode": "#(config-vlan)"
                 },
                 {
                     "command": "interface <interface>",
                     "description": "Selects an interface",
-                    "parameters": ["<interface>: e.g., FastEthernet0/18"]
+                    "parameters": ["<interface>: e.g., FastEthernet0/18"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "switchport mode access",
                     "description": "Sets interface as access mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport access vlan <VLAN_ID>",
                     "description": "Assigns VLAN to interface",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "mls qos trust cos",
                     "description": "Enables QoS trusting CoS values",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport voice vlan <VLAN_ID>",
                     "description": "Assigns a voice VLAN to the interface",
-                    "parameters": ["<VLAN_ID>: Voice VLAN number"]
+                    "parameters": ["<VLAN_ID>: Voice VLAN number"],
+                    "mode": "#(config-if)"
                 }
             ]
         },
@@ -95,17 +108,20 @@
                 {
                     "command": "no vlan <VLAN_ID>",
                     "description": "Deletes a VLAN",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "delete flash:vlan.dat",
                     "description": "Deletes VLAN configuration file",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "reload",
                     "description": "Reboots the switch to apply changes",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -118,24 +134,28 @@
                     "description": "Selects an interface to configure",
                     "parameters": [
                         "<interface>: e.g., FastEthernet0/1, GigabitEthernet0/2"
-                    ]
+                    ],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "switchport mode trunk",
                     "description": "Sets the interface to trunk mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport trunk allowed vlan <VLAN_LIST>",
                     "description": "Specifies which VLANs are allowed on the trunk",
                     "parameters": [
                         "<VLAN_LIST>: VLAN numbers (e.g., 10,20, all)"
-                    ]
+                    ],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport trunk native vlan <VLAN_ID>",
                     "description": "Sets the native VLAN for the trunk",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config-if)"
                 }
             ]
         },
@@ -146,22 +166,26 @@
                 {
                     "command": "switchport nonegotiate",
                     "description": "Disables DTP negotiation",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport mode dynamic auto",
                     "description": "Sets port to auto mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "switchport mode {access | dynamic {auto | desirable} | trunk}",
                     "description": "Configures DTP mode",
-                    "parameters": ["Access, Auto, Desirable, Trunk"]
+                    "parameters": ["Access, Auto, Desirable, Trunk"],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "show dtp interface <interface>",
                     "description": "Displays DTP status for an interface",
-                    "parameters": ["<interface>: Interface name"]
+                    "parameters": ["<interface>: Interface name"],
+                    "mode": "#"
                 }
             ],
             "tables": [
@@ -208,22 +232,26 @@
                 {
                     "command": "show vlan brief",
                     "description": "Displays VLANs and their assigned interfaces",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show interfaces trunk",
                     "description": "Displays trunked interfaces and allowed VLANs",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show mac address-table",
                     "description": "Displays the MAC address table and VLAN associations",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 },
                 {
                     "command": "show spanning-tree",
                     "description": "Displays Spanning Tree Protocol (STP) details",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -237,17 +265,20 @@
                     "parameters": [
                         "<interface>: Physical interface",
                         "<subinterface>: Subinterface number"
-                    ]
+                    ],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "encapsulation dot1q <VLAN_ID>",
                     "description": "Assigns a VLAN tag to the subinterface",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config-subif)"
                 },
                 {
                     "command": "ip address <IP> <subnet>",
                     "description": "Assigns an IP address to the subinterface",
-                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"],
+                    "mode": "#(config-subif)"
                 }
             ]
         },
@@ -258,22 +289,26 @@
                 {
                     "command": "interface vlan <VLAN_ID>",
                     "description": "Creates a Layer 3 SVI",
-                    "parameters": ["<VLAN_ID>: VLAN number"]
+                    "parameters": ["<VLAN_ID>: VLAN number"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "ip address <IP> <subnet>",
                     "description": "Assigns an IP to the VLAN SVI",
-                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "no shut",
                     "description": "Enables the interface",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "ip routing",
                     "description": "Enables Layer 3 routing",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config)"
                 }
             ]
         },
@@ -284,32 +319,38 @@
                 {
                     "command": "interface <interface>",
                     "description": "Selects an interface",
-                    "parameters": ["<interface>: e.g., GigabitEthernet0/0/1"]
+                    "parameters": ["<interface>: e.g., GigabitEthernet0/0/1"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "no switchport",
                     "description": "Converts the port to Layer 3 mode",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "ip address <IP> <subnet>",
                     "description": "Assigns an IP address",
-                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"]
+                    "parameters": ["<IP>: IP address", "<subnet>: Subnet mask"],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "no shut",
                     "description": "Enables the interface",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config-if)"
                 },
                 {
                     "command": "ip routing",
                     "description": "Enables Layer 3 routing",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "router ospf <process_id>",
                     "description": "Starts OSPF routing",
-                    "parameters": ["<process_id>: OSPF process ID"]
+                    "parameters": ["<process_id>: OSPF process ID"],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "network <IP> <wildcard> area <area_id>",
@@ -318,12 +359,14 @@
                         "<IP>: Network IP",
                         "<wildcard>: Wildcard mask",
                         "<area_id>: OSPF area"
-                    ]
+                    ],
+                    "mode": "#(config-router)"
                 },
                 {
                     "command": "show ip route | begin Gateway",
                     "description": "Displays routing table starting from Gateway",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#"
                 }
             ]
         },
@@ -334,7 +377,8 @@
                 {
                     "command": "ipv6 unicast-routing",
                     "description": "Enables IPv6 routing",
-                    "parameters": []
+                    "parameters": [],
+                    "mode": "#(config)"
                 },
                 {
                     "command": "ipv6 address <IPv6>/<prefix>",
@@ -342,7 +386,8 @@
                     "parameters": [
                         "<IPv6>: IPv6 address",
                         "<prefix>: Prefix length (e.g., 64)"
-                    ]
+                    ],
+                    "mode": "#(config-if)"
                 }
             ]
         }

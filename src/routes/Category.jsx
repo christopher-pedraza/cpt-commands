@@ -19,6 +19,7 @@ import BackToUp from "@uiw/react-back-to-top";
 
 import { LinkIcon } from "@/icons/LinkIcon";
 import { BackIcon } from "@/icons/BackIcon";
+import SectionCard from "../components/SectionCard";
 
 export default function Category() {
     const { category_id } = useParams();
@@ -55,13 +56,6 @@ export default function Category() {
         });
     };
 
-    const copySectionLink = (sectionId) => {
-        const link = `${
-            window.location.origin
-        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
-        copyAndAlert(link);
-    };
-
     const copyCategoryLink = () => {
         const link = `${
             window.location.origin
@@ -90,65 +84,7 @@ export default function Category() {
                     <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
                 </Button>
 
-                {sectionData?.sections.map((section, index) => (
-                    <Card
-                        fullWidth
-                        key={index}
-                        className="mb-4 mt-4 p-2"
-                        id={section.id}
-                    >
-                        <CardHeader className="text-xl font-bold">
-                            <Button
-                                className="bg-clear text-xl font-bold truncate"
-                                startContent={<LinkIcon />}
-                                disableRipple
-                                onPress={() => copySectionLink(section.id)}
-                            >
-                                {section.title}
-                            </Button>
-                        </CardHeader>
-                        <CardBody className="flex flex-col">
-                            <Table key={index} isStriped>
-                                <TableHeader>
-                                    <TableColumn>
-                                        <span className="text-lg">Command</span>
-                                    </TableColumn>
-                                    <TableColumn>
-                                        <span className="text-lg">
-                                            Description
-                                        </span>
-                                    </TableColumn>
-                                    <TableColumn>
-                                        <span className="text-lg">
-                                            Parameters
-                                        </span>
-                                    </TableColumn>
-                                </TableHeader>
-                                <TableBody>
-                                    {section?.commands.map((command, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                {command.command}
-                                            </TableCell>
-                                            <TableCell>
-                                                {command.description}
-                                            </TableCell>
-                                            <TableCell>
-                                                {command.parameters.map(
-                                                    (parameter, index) => (
-                                                        <div key={index}>
-                                                            {parameter}
-                                                        </div>
-                                                    )
-                                                )}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </CardBody>
-                    </Card>
-                ))}
+                <SectionCard sectionData={sectionData} />
             </div>
             <BackToUp>Top</BackToUp>
         </div>
