@@ -261,6 +261,67 @@
             ]
         },
         {
+            "id": "bgp-configuration",
+            "title": "BGP Configuration",
+            "commands": [
+                {
+                    "command": "router bgp <AS>",
+                    "description": "Enables BGP routing process and enters BGP configuration mode",
+                    "parameters": [
+                        "<AS>: Autonomous System number (e.g., 65001)"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "neighbor {ip_add | peer-group-name} remote-as {AS}",
+                    "description": "Establishes a BGP neighbor relationship with the specified IP or peer group and AS number",
+                    "parameters": [
+                        "{ip_add}: Neighbor's IP address (e.g., 192.168.1.1)",
+                        "{AS}: Neighbor's Autonomous System number (e.g., 65002)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
+                    "command": "network <ip> mask <mask>",
+                    "description": "Specifies the networks to advertise in BGP",
+                    "parameters": [
+                        "<ip>: Network address to advertise (e.g., 192.168.1.0)",
+                        "<mask>: Subnet mask for the network (e.g., 255.255.255.0)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
+                    "command": "bgp router-id <dir_loopback>",
+                    "description": "Sets the BGP router ID using a loopback interface IP address",
+                    "parameters": [
+                        "<dir_loopback>: Loopback IP address (e.g., 1.1.1.1)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
+                    "command": "neighbor <ip_add> password <string>",
+                    "description": "Configures MD5 authentication for a BGP neighbor",
+                    "parameters": [
+                        "<ip_add>: Neighbor's IP address (e.g., 192.168.1.1)",
+                        "<string>: Password string for authentication (e.g., MySecurePassword)"
+                    ],
+                    "mode": "(config-router)#"
+                },
+                {
+                    "command": "show ip bgp summary",
+                    "description": "Displays a summary of BGP neighbor status and routes",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "show ip bgp",
+                    "description": "Displays the BGP routing table",
+                    "parameters": [],
+                    "mode": "#"
+                }
+            ]
+        },
+        {
             "id": "additional-useful-routing-commands",
             "title": "Additional Useful Routing Commands",
             "commands": [
