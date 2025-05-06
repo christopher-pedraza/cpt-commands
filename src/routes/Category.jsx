@@ -68,7 +68,7 @@ export default function Category() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center min-h-screen pt-8">
             <div className="flex flex-col items-start w-3/4">
                 <Button startContent={<BackIcon />} onPress={returnToHome}>
                     Return
