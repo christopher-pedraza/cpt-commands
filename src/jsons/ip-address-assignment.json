@@ -126,6 +126,266 @@
                     "mode": "(config-if)#"
                 }
             ]
+        },
+        {
+            "id": "dhcpv6-stateless-configuration",
+            "title": "Stateless DHCPv6 Configuration",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing on the router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 dhcp pool <pool-name>",
+                    "description": "Creates a stateless DHCPv6 pool and enters DHCPv6 pool configuration mode.",
+                    "parameters": ["<pool-name>: Name of the DHCPv6 pool"],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "dns-server <address> [<address2> ... <address8>]",
+                    "description": "Specifies one or more DNS servers for the DHCPv6 clients.",
+                    "parameters": [
+                        "<address>: Primary DNS server IPv6 address",
+                        "[<address2> ... <address8>]: Optional additional DNS servers"
+                    ],
+                    "mode": "(config-dhcpv6)#"
+                },
+                {
+                    "command": "domain-name <domain>",
+                    "description": "Specifies the domain name for the DHCPv6 clients.",
+                    "parameters": ["<domain>: Domain name (e.g., example.com)"],
+                    "mode": "(config-dhcpv6)#"
+                },
+                {
+                    "command": "interface <interface-id>",
+                    "description": "Enters interface configuration mode for the specified interface.",
+                    "parameters": [
+                        "<interface-id>: Interface identifier (e.g., GigabitEthernet0/0/1)"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 address fe80::<link-local-id> link-local",
+                    "description": "Configures a link-local IPv6 address on the interface.",
+                    "parameters": ["<link-local-id>: Link-local identifier"],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 address <global-ipv6-address>/<prefix-length>",
+                    "description": "Configures a global IPv6 address on the interface.",
+                    "parameters": [
+                        "<global-ipv6-address>: Global IPv6 address",
+                        "<prefix-length>: Prefix length (e.g., 64)"
+                    ],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 nd other-config-flag",
+                    "description": "Sets the 'other-config' flag to indicate that additional configuration is available via DHCPv6.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 dhcp server <pool-name>",
+                    "description": "Enables the DHCPv6 server on the interface and associates it with the specified pool.",
+                    "parameters": ["<pool-name>: Name of the DHCPv6 pool"],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "no ipv6 nd other-config-flag",
+                    "description": "Resets the interface to the default SLAAC-only option by clearing the 'other-config' flag.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv6-stateless-client",
+            "title": "Stateless DHCPv6 Client Configuration",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing on the client router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "interface <interface-id>",
+                    "description": "Enters interface configuration mode for the specified interface.",
+                    "parameters": [
+                        "<interface-id>: Interface identifier (e.g., GigabitEthernet0/0/1)"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 enable",
+                    "description": "Enables IPv6 processing on the interface.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 address autoconfig",
+                    "description": "Configures the interface to automatically configure its IPv6 address using SLAAC.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv6-stateful-configuration",
+            "title": "Stateful DHCPv6 Configuration",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing on the router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 dhcp pool <pool-name>",
+                    "description": "Creates a stateful DHCPv6 pool and enters DHCPv6 pool configuration mode.",
+                    "parameters": ["<pool-name>: Name of the DHCPv6 pool"],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "address prefix <prefix>/<prefix-length>",
+                    "description": "Defines the range of IPv6 addresses that the DHCPv6 server can assign.",
+                    "parameters": [
+                        "<prefix>: IPv6 network prefix",
+                        "<prefix-length>: Prefix length (e.g., 64)"
+                    ],
+                    "mode": "(config-dhcpv6)#"
+                },
+                {
+                    "command": "dns-server <address> [<address2> ... <address8>]",
+                    "description": "Specifies one or more DNS servers for the DHCPv6 clients.",
+                    "parameters": [
+                        "<address>: Primary DNS server IPv6 address",
+                        "[<address2> ... <address8>]: Optional additional DNS servers"
+                    ],
+                    "mode": "(config-dhcpv6)#"
+                },
+                {
+                    "command": "domain-name <domain>",
+                    "description": "Specifies the domain name for the DHCPv6 clients.",
+                    "parameters": ["<domain>: Domain name (e.g., example.com)"],
+                    "mode": "(config-dhcpv6)#"
+                },
+                {
+                    "command": "interface <interface-id>",
+                    "description": "Enters interface configuration mode for the specified interface.",
+                    "parameters": [
+                        "<interface-id>: Interface identifier (e.g., GigabitEthernet0/0/1)"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 address fe80::<link-local-id> link-local",
+                    "description": "Configures a link-local IPv6 address on the interface.",
+                    "parameters": ["<link-local-id>: Link-local identifier"],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 address <global-ipv6-address>/<prefix-length>",
+                    "description": "Configures a global IPv6 address on the interface.",
+                    "parameters": [
+                        "<global-ipv6-address>: Global IPv6 address",
+                        "<prefix-length>: Prefix length (e.g., 64)"
+                    ],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 nd managed-config-flag",
+                    "description": "Sets the 'managed-config' flag to indicate that addresses are assigned via DHCPv6.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 nd prefix default no-autoconfig",
+                    "description": "Disables autoconfiguration for the default prefix.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 dhcp server <pool-name>",
+                    "description": "Enables the DHCPv6 server on the interface and associates it with the specified pool.",
+                    "parameters": ["<pool-name>: Name of the DHCPv6 pool"],
+                    "mode": "(config-if)#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv6-stateful-client",
+            "title": "Stateful DHCPv6 Client Configuration",
+            "commands": [
+                {
+                    "command": "ipv6 unicast-routing",
+                    "description": "Enables IPv6 routing on the client router.",
+                    "parameters": [],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "interface <interface-id>",
+                    "description": "Enters interface configuration mode for the specified interface.",
+                    "parameters": [
+                        "<interface-id>: Interface identifier (e.g., GigabitEthernet0/0/1)"
+                    ],
+                    "mode": "(config)#"
+                },
+                {
+                    "command": "ipv6 enable",
+                    "description": "Enables IPv6 processing on the interface.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                },
+                {
+                    "command": "ipv6 address dhcp",
+                    "description": "Configures the interface to obtain an IPv6 address via DHCPv6.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv6-verification",
+            "title": "DHCPv6 Verification Commands",
+            "commands": [
+                {
+                    "command": "show ipv6 dhcp pool",
+                    "description": "Displays information about configured DHCPv6 pools.",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "show ipv6 dhcp binding",
+                    "description": "Shows all DHCPv6 address-to-MAC address bindings.",
+                    "parameters": [],
+                    "mode": "#"
+                },
+                {
+                    "command": "show ipv6 dhcp interface",
+                    "description": "Displays DHCPv6-related information for interfaces.",
+                    "parameters": [],
+                    "mode": "#"
+                }
+            ]
+        },
+        {
+            "id": "dhcpv6-relay-agent",
+            "title": "DHCPv6 Relay Agent Configuration",
+            "commands": [
+                {
+                    "command": "ipv6 dhcp relay destination <ipv6-address> [interface-type interface-number]",
+                    "description": "Configures the DHCPv6 relay agent to forward requests to the specified DHCPv6 server.",
+                    "parameters": [
+                        "<ipv6-address>: IPv6 address of the DHCPv6 server",
+                        "[interface-type interface-number]: Optional egress interface for reaching the server"
+                    ],
+                    "mode": "(config-if)#"
+                }
+            ]
         }
     ]
 }
