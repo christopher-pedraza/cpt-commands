@@ -74,6 +74,12 @@
                         "[<address2> ... <address8>]: Optional additional NetBIOS servers"
                     ],
                     "mode": "(dhcp-config)#"
+                },
+                {
+                    "command": "ip address dhcp",
+                    "description": "Configures the interface to obtain an IPv4 address via DHCP from a DHCP server.",
+                    "parameters": [],
+                    "mode": "(config-if)#"
                 }
             ]
         },

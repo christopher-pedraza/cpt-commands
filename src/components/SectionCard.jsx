@@ -14,14 +14,7 @@ import {
 
 import { LinkIcon } from "@/icons/LinkIcon";
 
-export default function SectionCard({ sectionData }) {
-    const copySectionLink = (sectionId) => {
-        const link = `${
-            window.location.origin
-        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
-        copyAndAlert(link);
-    };
-
+export default function SectionCard({ sectionData, copySectionLink }) {
     return (
         <>
             {sectionData?.sections.map((section, index) => (

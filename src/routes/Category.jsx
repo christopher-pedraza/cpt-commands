@@ -63,6 +63,13 @@ export default function Category() {
         copyAndAlert(link);
     };
 
+    const copySectionLink = (sectionId) => {
+        const link = `${
+            window.location.origin
+        }${base}#/${location.pathname.substring(1)}#${sectionId}`;
+        copyAndAlert(link);
+    };
+
     const returnToHome = () => {
         navigate(`/`);
     };
@@ -84,7 +91,10 @@ export default function Category() {
                     <h1 className="text-2xl font-bold">{sectionData?.title}</h1>
                 </Button>
 
-                <SectionCard sectionData={sectionData} />
+                <SectionCard
+                    sectionData={sectionData}
+                    copySectionLink={copySectionLink}
+                />
             </div>
             <BackToUp>Top</BackToUp>
         </div>
