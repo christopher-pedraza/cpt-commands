@@ -1,91 +1,91 @@
 {
-    "title": "Redundancy Protocols Configuration",
-    "id": "redundancy-protocols",
-    "description": "This document includes commands for configuring redundancy protocols such as HSRP, STP, VRRP, and GLBP.",
-    "sections": [
+  "title": "Redundancy Protocols Configuration",
+  "id": "redundancy-protocols",
+  "description": "This document includes commands for configuring redundancy protocols such as HSRP, STP, VRRP, and GLBP.",
+  "sections": [
+    {
+      "id": "hsrp-configuration",
+      "title": "HSRP (Hot Standby Router Protocol) Configuration",
+      "commands": [
         {
-            "id": "hsrp-configuration",
-            "title": "HSRP (Hot Standby Router Protocol) Configuration",
-            "commands": [
-                {
-                    "command": "standby version <version>",
-                    "description": "Specifies the HSRP protocol version. Version 2 supports IPv6 and additional features.",
-                    "parameters": ["<version>: HSRP version (1 or 2)"],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "standby <group-number> ip <virtual-ip>",
-                    "description": "Configures the virtual IP address for the HSRP group.",
-                    "parameters": [
-                        "<group-number>: HSRP group number (1-255)",
-                        "<virtual-ip>: Virtual IP address for the default gateway"
-                    ],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "standby <group-number> priority <priority-value>",
-                    "description": "Sets the priority for the router in the HSRP group. Higher values determine the active router.",
-                    "parameters": [
-                        "<group-number>: HSRP group number (1-255)",
-                        "<priority-value>: Priority value (0-255, default is 100)"
-                    ],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "standby <group-number> preempt",
-                    "description": "Enables preemption so that the router with the highest priority becomes the active router.",
-                    "parameters": ["<group-number>: HSRP group number (1-255)"],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "show standby",
-                    "description": "Displays detailed information about HSRP status, including roles, group, virtual IP, and preemption.",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show standby brief",
-                    "description": "Displays a summary of HSRP status for all interfaces.",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "standby version <version>",
+          "description": "Specifies the HSRP protocol version. Version 2 supports IPv6 and additional features.",
+          "parameters": ["<version>: HSRP version (1 or 2)"],
+          "mode": "(config-if)#"
         },
         {
-            "id": "stp-configuration",
-            "title": "STP (Spanning Tree Protocol) Configuration",
-            "commands": [
-                {
-                    "command": "spanning-tree vlan <vlan-id> root primary",
-                    "description": "Configures the switch to become the root bridge for the specified VLAN.",
-                    "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "spanning-tree vlan <vlan-id> root secondary",
-                    "description": "Configures the switch to become the secondary root bridge for the specified VLAN.",
-                    "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "spanning-tree portfast",
-                    "description": "Enables PortFast on an interface to immediately transition it to forwarding state.",
-                    "parameters": [],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "show spanning-tree",
-                    "description": "Displays detailed information about the Spanning Tree Protocol status.",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show spanning-tree vlan <vlan-id>",
-                    "description": "Displays STP information for a specific VLAN.",
-                    "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
-                    "mode": "#"
-                }
-            ]
+          "command": "standby <group-number> ip <virtual-ip>",
+          "description": "Configures the virtual IP address for the HSRP group.",
+          "parameters": [
+            "<group-number>: HSRP group number (1-255)",
+            "<virtual-ip>: Virtual IP address for the default gateway"
+          ],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "standby <group-number> priority <priority-value>",
+          "description": "Sets the priority for the router in the HSRP group. Higher values determine the active router.",
+          "parameters": [
+            "<group-number>: HSRP group number (1-255)",
+            "<priority-value>: Priority value (0-255, default is 100)"
+          ],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "standby <group-number> preempt",
+          "description": "Enables preemption so that the router with the highest priority becomes the active router.",
+          "parameters": ["<group-number>: HSRP group number (1-255)"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "show standby",
+          "description": "Displays detailed information about HSRP status, including roles, group, virtual IP, and preemption.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show standby brief",
+          "description": "Displays a summary of HSRP status for all interfaces.",
+          "parameters": [],
+          "mode": "#"
         }
-    ]
+      ]
+    },
+    {
+      "id": "stp-configuration",
+      "title": "STP (Spanning Tree Protocol) Configuration",
+      "commands": [
+        {
+          "command": "spanning-tree vlan <vlan-id> root primary",
+          "description": "Configures the switch to become the root bridge for the specified VLAN.",
+          "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "spanning-tree vlan <vlan-id> root secondary",
+          "description": "Configures the switch to become the secondary root bridge for the specified VLAN.",
+          "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "spanning-tree portfast",
+          "description": "Enables PortFast on an interface to immediately transition it to forwarding state.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "show spanning-tree",
+          "description": "Displays detailed information about the Spanning Tree Protocol status.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show spanning-tree vlan <vlan-id>",
+          "description": "Displays STP information for a specific VLAN.",
+          "parameters": ["<vlan-id>: VLAN identifier (e.g., 10)"],
+          "mode": "#"
+        }
+      ]
+    }
+  ]
 }

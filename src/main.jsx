@@ -12,19 +12,19 @@ import { Provider } from "react-redux";
 import "./index.css";
 
 function HeroUIWrapper({ children }) {
-    const navigate = useNavigate();
-    return <HeroUIProvider navigate={navigate}>{children}</HeroUIProvider>;
+  const navigate = useNavigate();
+  return <HeroUIProvider navigate={navigate}>{children}</HeroUIProvider>;
 }
 
 createRoot(document.getElementById("root")).render(
-    <HashRouter>
-        <Provider store={store}>
-            <HeroUIWrapper>
-                <ToastProvider />
-                <main className="dark text-foreground bg-background">
-                    <App />
-                </main>
-            </HeroUIWrapper>
-        </Provider>
-    </HashRouter>
+  <HashRouter>
+    <Provider store={store}>
+      <HeroUIWrapper>
+        <ToastProvider />
+        <main className="dark text-foreground bg-background">
+          <App />
+        </main>
+      </HeroUIWrapper>
+    </Provider>
+  </HashRouter>,
 );

@@ -1,349 +1,338 @@
 {
-    "title": "Routing Configuration",
-    "id": "routing-configuration",
-    "description": "This document summarizes essential commands for configuring dynamic routing protocols in Cisco Packet Tracer.",
-    "sections": [
+  "title": "Routing Configuration",
+  "id": "routing-configuration",
+  "description": "This document summarizes essential commands for configuring dynamic routing protocols in Cisco Packet Tracer.",
+  "sections": [
+    {
+      "id": "rip-configuration",
+      "title": "RIP Configuration",
+      "commands": [
         {
-            "id": "rip-configuration",
-            "title": "RIP Configuration",
-            "commands": [
-                {
-                    "command": "router rip",
-                    "description": "Enters RIP configuration mode",
-                    "parameters": [],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "version 2",
-                    "description": "Enables RIP version 2 (recommended)",
-                    "parameters": [],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "network <network>",
-                    "description": "Specifies which network(s) to advertise",
-                    "parameters": ["<network>: e.g., 192.168.1.0"],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "no auto-summary",
-                    "description": "Disables automatic summarization",
-                    "parameters": [],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "show ip protocols",
-                    "description": "Displays routing protocol information",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip route rip",
-                    "description": "Displays routes learned via RIP",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "router rip",
+          "description": "Enters RIP configuration mode",
+          "parameters": [],
+          "mode": "(config)#"
         },
         {
-            "id": "eigrp-configuration",
-            "title": "EIGRP Configuration",
-            "commands": [
-                {
-                    "command": "router eigrp <ASN>",
-                    "description": "Enters EIGRP configuration mode",
-                    "parameters": [
-                        "<ASN>: Autonomous System Number (e.g., 100)"
-                    ],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "network <network>",
-                    "description": "Specifies which network(s) to advertise",
-                    "parameters": ["<network>: e.g., 192.168.1.0"],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "no auto-summary",
-                    "description": "Disables automatic summarization",
-                    "parameters": [],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "show ip protocols",
-                    "description": "Displays routing protocol info",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip route eigrp",
-                    "description": "Shows EIGRP-learned routes",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip eigrp neighbors",
-                    "description": "Shows EIGRP neighbor relationships",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "version 2",
+          "description": "Enables RIP version 2 (recommended)",
+          "parameters": [],
+          "mode": "(config-router)#"
         },
         {
-            "id": "ospf-configuration",
-            "title": "OSPF Configuration",
-            "commands": [
-                {
-                    "command": "router ospf <process_id>",
-                    "description": "Enters OSPF router configuration mode",
-                    "parameters": ["<process_id>: Any number (e.g., 1)"],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "router-id <id>",
-                    "description": "Sets the OSPF router ID",
-                    "parameters": [
-                        "<id>: Router ID in IP address format (e.g., 1.1.1.1)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "network <IP> <wildcard> area <area_id>",
-                    "description": "Advertises a network in a specific OSPF area",
-                    "parameters": [
-                        "<IP>: Network IP",
-                        "<wildcard>: Wildcard mask",
-                        "<area_id>: Area number (e.g., 0)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "passive-interface <interface>",
-                    "description": "Prevents OSPF from sending updates out of the specified interface",
-                    "parameters": [
-                        "<interface>: Interface name (e.g., GigabitEthernet0/0)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "show ip protocols",
-                    "description": "Displays active routing protocols",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip ospf neighbor",
-                    "description": "Displays OSPF neighbors",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip route ospf",
-                    "description": "Shows routes learned through OSPF",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip ospf",
-                    "description": "Displays general OSPF process info",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "clear ip ospf process",
-                    "description": "Restarts the OSPF process, clearing all OSPF states",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "network <network>",
+          "description": "Specifies which network(s) to advertise",
+          "parameters": ["<network>: e.g., 192.168.1.0"],
+          "mode": "(config-router)#"
         },
         {
-            "id": "ipv6-routing-configuration",
-            "title": "IPv6 Routing Configuration",
-            "commands": [
-                {
-                    "command": "ipv6 unicast-routing",
-                    "description": "Enables IPv6 routing on the router or Layer 3 switch",
-                    "parameters": [],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "interface <interface>",
-                    "description": "Selects an interface to configure",
-                    "parameters": ["<interface>: e.g., GigabitEthernet0/0"],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "ipv6 address <ipv6_addr>/<prefix>",
-                    "description": "Assigns an IPv6 address to the interface",
-                    "parameters": [
-                        "<ipv6_addr>: e.g., 2001:db8:1::1",
-                        "<prefix>: e.g., 64"
-                    ],
-                    "mode": "(config-if)#"
-                },
-                {
-                    "command": "show ipv6 route",
-                    "description": "Displays the IPv6 routing table",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ipv6 protocols",
-                    "description": "Displays IPv6 routing protocol information",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ipv6 interface brief",
-                    "description": "Displays summary of IPv6-enabled interfaces",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ipv6 neighbors",
-                    "description": "Displays the IPv6 neighbor cache",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ],
-            "subsections": [
-                {
-                    "id": "static-ipv6-routing",
-                    "title": "Static IPv6 Routing",
-                    "commands": [
-                        {
-                            "command": "ipv6 route <destination> <next-hop>",
-                            "description": "Configures a static IPv6 route",
-                            "parameters": [
-                                "<destination>: e.g., 2001:db8:2::/64",
-                                "<next-hop>: e.g., 2001:db8:1::2"
-                            ],
-                            "mode": "(config)#"
-                        }
-                    ]
-                },
-                {
-                    "id": "ospfv3-ipv6-ospf",
-                    "title": "OSPFv3 (IPv6 OSPF)",
-                    "commands": [
-                        {
-                            "command": "ipv6 router ospf <process_id>",
-                            "description": "Enters OSPFv3 configuration mode",
-                            "parameters": ["<process_id>: e.g., 1"],
-                            "mode": "(config)#"
-                        },
-                        {
-                            "command": "router-id <id>",
-                            "description": "Assigns a router ID",
-                            "parameters": ["<id>: e.g., 1.1.1.1"],
-                            "mode": "(config-rtr)#"
-                        },
-                        {
-                            "command": "interface <interface>",
-                            "description": "Enters interface mode for OSPFv3",
-                            "parameters": [
-                                "<interface>: e.g., GigabitEthernet0/0"
-                            ],
-                            "mode": "(config)#"
-                        },
-                        {
-                            "command": "ipv6 ospf <process_id> area <area_id>",
-                            "description": "Enables OSPFv3 on the interface",
-                            "parameters": [
-                                "<process_id>: e.g., 1",
-                                "<area_id>: e.g., 0"
-                            ],
-                            "mode": "(config-if)#"
-                        }
-                    ]
-                }
-            ]
+          "command": "no auto-summary",
+          "description": "Disables automatic summarization",
+          "parameters": [],
+          "mode": "(config-router)#"
         },
         {
-            "id": "bgp-configuration",
-            "title": "BGP Configuration",
-            "commands": [
-                {
-                    "command": "router bgp <AS>",
-                    "description": "Enables BGP routing process and enters BGP configuration mode",
-                    "parameters": [
-                        "<AS>: Autonomous System number (e.g., 65001)"
-                    ],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "neighbor {ip_add | peer-group-name} remote-as {AS}",
-                    "description": "Establishes a BGP neighbor relationship with the specified IP or peer group and AS number",
-                    "parameters": [
-                        "{ip_add}: Neighbor's IP address (e.g., 192.168.1.1)",
-                        "{AS}: Neighbor's Autonomous System number (e.g., 65002)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "network <ip> mask <mask>",
-                    "description": "Specifies the networks to advertise in BGP",
-                    "parameters": [
-                        "<ip>: Network address to advertise (e.g., 192.168.1.0)",
-                        "<mask>: Subnet mask for the network (e.g., 255.255.255.0)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "bgp router-id <dir_loopback>",
-                    "description": "Sets the BGP router ID using a loopback interface IP address",
-                    "parameters": [
-                        "<dir_loopback>: Loopback IP address (e.g., 1.1.1.1)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "neighbor <ip_add> password <string>",
-                    "description": "Configures MD5 authentication for a BGP neighbor",
-                    "parameters": [
-                        "<ip_add>: Neighbor's IP address (e.g., 192.168.1.1)",
-                        "<string>: Password string for authentication (e.g., MySecurePassword)"
-                    ],
-                    "mode": "(config-router)#"
-                },
-                {
-                    "command": "show ip bgp summary",
-                    "description": "Displays a summary of BGP neighbor status and routes",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "show ip bgp",
-                    "description": "Displays the BGP routing table",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "show ip protocols",
+          "description": "Displays routing protocol information",
+          "parameters": [],
+          "mode": "#"
         },
         {
-            "id": "additional-useful-routing-commands",
-            "title": "Additional Useful Routing Commands",
-            "commands": [
-                {
-                    "command": "ip routing",
-                    "description": "Enables IP routing on Layer 3 devices",
-                    "parameters": [],
-                    "mode": "(config)#"
-                },
-                {
-                    "command": "show ip route",
-                    "description": "Shows the IP routing table",
-                    "parameters": [],
-                    "mode": "#"
-                },
-                {
-                    "command": "clear ip route *",
-                    "description": "Clears routing table entries",
-                    "parameters": [],
-                    "mode": "#"
-                }
-            ]
+          "command": "show ip route rip",
+          "description": "Displays routes learned via RIP",
+          "parameters": [],
+          "mode": "#"
         }
-    ]
+      ]
+    },
+    {
+      "id": "eigrp-configuration",
+      "title": "EIGRP Configuration",
+      "commands": [
+        {
+          "command": "router eigrp <ASN>",
+          "description": "Enters EIGRP configuration mode",
+          "parameters": ["<ASN>: Autonomous System Number (e.g., 100)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <network>",
+          "description": "Specifies which network(s) to advertise",
+          "parameters": ["<network>: e.g., 192.168.1.0"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "no auto-summary",
+          "description": "Disables automatic summarization",
+          "parameters": [],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "show ip protocols",
+          "description": "Displays routing protocol info",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip route eigrp",
+          "description": "Shows EIGRP-learned routes",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip eigrp neighbors",
+          "description": "Shows EIGRP neighbor relationships",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "ospf-configuration",
+      "title": "OSPF Configuration",
+      "commands": [
+        {
+          "command": "router ospf <process_id>",
+          "description": "Enters OSPF router configuration mode",
+          "parameters": ["<process_id>: Any number (e.g., 1)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "router-id <id>",
+          "description": "Sets the OSPF router ID",
+          "parameters": [
+            "<id>: Router ID in IP address format (e.g., 1.1.1.1)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "network <IP> <wildcard> area <area_id>",
+          "description": "Advertises a network in a specific OSPF area",
+          "parameters": [
+            "<IP>: Network IP",
+            "<wildcard>: Wildcard mask",
+            "<area_id>: Area number (e.g., 0)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "passive-interface <interface>",
+          "description": "Prevents OSPF from sending updates out of the specified interface",
+          "parameters": [
+            "<interface>: Interface name (e.g., GigabitEthernet0/0)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "show ip protocols",
+          "description": "Displays active routing protocols",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip ospf neighbor",
+          "description": "Displays OSPF neighbors",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip route ospf",
+          "description": "Shows routes learned through OSPF",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip ospf",
+          "description": "Displays general OSPF process info",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "clear ip ospf process",
+          "description": "Restarts the OSPF process, clearing all OSPF states",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "ipv6-routing-configuration",
+      "title": "IPv6 Routing Configuration",
+      "commands": [
+        {
+          "command": "ipv6 unicast-routing",
+          "description": "Enables IPv6 routing on the router or Layer 3 switch",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface <interface>",
+          "description": "Selects an interface to configure",
+          "parameters": ["<interface>: e.g., GigabitEthernet0/0"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ipv6 address <ipv6_addr>/<prefix>",
+          "description": "Assigns an IPv6 address to the interface",
+          "parameters": [
+            "<ipv6_addr>: e.g., 2001:db8:1::1",
+            "<prefix>: e.g., 64"
+          ],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "show ipv6 route",
+          "description": "Displays the IPv6 routing table",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ipv6 protocols",
+          "description": "Displays IPv6 routing protocol information",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ipv6 interface brief",
+          "description": "Displays summary of IPv6-enabled interfaces",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ipv6 neighbors",
+          "description": "Displays the IPv6 neighbor cache",
+          "parameters": [],
+          "mode": "#"
+        }
+      ],
+      "subsections": [
+        {
+          "id": "static-ipv6-routing",
+          "title": "Static IPv6 Routing",
+          "commands": [
+            {
+              "command": "ipv6 route <destination> <next-hop>",
+              "description": "Configures a static IPv6 route",
+              "parameters": [
+                "<destination>: e.g., 2001:db8:2::/64",
+                "<next-hop>: e.g., 2001:db8:1::2"
+              ],
+              "mode": "(config)#"
+            }
+          ]
+        },
+        {
+          "id": "ospfv3-ipv6-ospf",
+          "title": "OSPFv3 (IPv6 OSPF)",
+          "commands": [
+            {
+              "command": "ipv6 router ospf <process_id>",
+              "description": "Enters OSPFv3 configuration mode",
+              "parameters": ["<process_id>: e.g., 1"],
+              "mode": "(config)#"
+            },
+            {
+              "command": "router-id <id>",
+              "description": "Assigns a router ID",
+              "parameters": ["<id>: e.g., 1.1.1.1"],
+              "mode": "(config-rtr)#"
+            },
+            {
+              "command": "interface <interface>",
+              "description": "Enters interface mode for OSPFv3",
+              "parameters": ["<interface>: e.g., GigabitEthernet0/0"],
+              "mode": "(config)#"
+            },
+            {
+              "command": "ipv6 ospf <process_id> area <area_id>",
+              "description": "Enables OSPFv3 on the interface",
+              "parameters": ["<process_id>: e.g., 1", "<area_id>: e.g., 0"],
+              "mode": "(config-if)#"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bgp-configuration",
+      "title": "BGP Configuration",
+      "commands": [
+        {
+          "command": "router bgp <AS>",
+          "description": "Enables BGP routing process and enters BGP configuration mode",
+          "parameters": ["<AS>: Autonomous System number (e.g., 65001)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "neighbor {ip_add | peer-group-name} remote-as {AS}",
+          "description": "Establishes a BGP neighbor relationship with the specified IP or peer group and AS number",
+          "parameters": [
+            "{ip_add}: Neighbor's IP address (e.g., 192.168.1.1)",
+            "{AS}: Neighbor's Autonomous System number (e.g., 65002)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "network <ip> mask <mask>",
+          "description": "Specifies the networks to advertise in BGP",
+          "parameters": [
+            "<ip>: Network address to advertise (e.g., 192.168.1.0)",
+            "<mask>: Subnet mask for the network (e.g., 255.255.255.0)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "bgp router-id <dir_loopback>",
+          "description": "Sets the BGP router ID using a loopback interface IP address",
+          "parameters": ["<dir_loopback>: Loopback IP address (e.g., 1.1.1.1)"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "neighbor <ip_add> password <string>",
+          "description": "Configures MD5 authentication for a BGP neighbor",
+          "parameters": [
+            "<ip_add>: Neighbor's IP address (e.g., 192.168.1.1)",
+            "<string>: Password string for authentication (e.g., MySecurePassword)"
+          ],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "show ip bgp summary",
+          "description": "Displays a summary of BGP neighbor status and routes",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip bgp",
+          "description": "Displays the BGP routing table",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "additional-useful-routing-commands",
+      "title": "Additional Useful Routing Commands",
+      "commands": [
+        {
+          "command": "ip routing",
+          "description": "Enables IP routing on Layer 3 devices",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "show ip route",
+          "description": "Shows the IP routing table",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "clear ip route *",
+          "description": "Clears routing table entries",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    }
+  ]
 }
