@@ -6,14 +6,11 @@ permissions: {}
 jobs:
   prettier:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: npm install
-      - run: npx prettier . --write
+      - run: npx prettier . --write --ignore-path .prettierignore
       - uses: autofix-ci/action@v1
         with:
           commit-message: "Apply Prettier format"
