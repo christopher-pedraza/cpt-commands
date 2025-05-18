@@ -1,2 +1,8 @@
-.github
-.vite
+.github/
+.vite/
+src/jsons/
+public/
+.gitignore
+*.md
+*.json
+*.lock
