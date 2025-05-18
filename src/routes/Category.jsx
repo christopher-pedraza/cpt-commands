@@ -75,13 +75,13 @@ export default function Category() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-8 overflow-x-auto">
-      <div className="flex flex-col items-start *:w-full lg:full">
+    <div className="flex flex-col items-center min-h-screen pt-8">
+      <div className="flex flex-col items-start *:w-7/8 lg:w-3/4">
         <Button startContent={<BackIcon />} onPress={returnToHome}>
           Return
         </Button>
       </div>
-      <div className="lg:w-7/8 *:w-full flex flex-col items-center justify-center">
+      <div className="lg:w-3/4 *:w-7/8 flex flex-col items-center justify-center">
         <Button
           className="bg-clear text-xl font-bold truncate"
           startContent={<LinkIcon />}
