@@ -26,7 +26,7 @@ export default function Category() {
   const location = useLocation();
   // Get the json data from the redux store
   const sectionData = useSelector((state) =>
-    selectFileById(state, category_id)
+    selectFileById(state, category_id),
   );
   const navigate = useNavigate();
   const base = import.meta.env.BASE_URL;
