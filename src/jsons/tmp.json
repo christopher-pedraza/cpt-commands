@@ -1,0 +1,241 @@
+{
+  "title": "Configuración Avanzada: OSPF, BGP, NAT y Rutas por Defecto",
+  "id": "configuracion-avanzada-ospf-bgp-nat",
+  "description": "Esta actividad cubre configuraciones avanzadas en dispositivos Cisco, incluyendo ruteo dinámico con OSPF y BGP, traducción de direcciones (NAT), propagación de rutas públicas y configuración de salida por defecto.",
+  "sections": [
+    {
+      "id": "paso-1-conecta-y-valida",
+      "title": "PASO 1 - Conecta y valida",
+      "briefDescription": "Conexión física y configuración básica de routers.",
+      "description": "Se conectan los equipos según topología, se establece la configuración base (hostname, contraseña enable, usuario VTY) y se asignan direcciones IP a interfaces, incluyendo loopbacks. Finalmente, se validan las conexiones mediante pings directos.",
+      "commands": [
+        {
+          "command": "hostname <nombre>",
+          "description": "Establece el nombre del dispositivo.",
+          "parameters": ["<nombre>: Nombre deseado para el router"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "enable secret class",
+          "description": "Establece la contraseña 'class' para modo privilegiado.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "username redes secret redes",
+          "description": "Crea un usuario con nombre 'redes' y contraseña 'redes'.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "line vty 0 15",
+          "description": "Accede a la configuración de líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "login local",
+          "description": "Habilita autenticación local para acceso VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "transport input telnet",
+          "description": "Permite conexión SSH en las líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-2-habilita-el-ruteo",
+      "title": "PASO 2 - Habilita el ruteo",
+      "briefDescription": "Configuración de OSPF y BGP entre routers.",
+      "description": "Se configura OSPF para comunicación interna entre routers locales y BGP para intercambio de rutas con ISP externo. Se omiten redes privadas deliberadamente en BGP.",
+      "commands": [
+        {
+          "command": "router ospf 1",
+          "description": "Inicia el proceso OSPF con ID 1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <ip> <wildcard> area 0",
+          "description": "Anuncia una red en el área 0 de OSPF.",
+          "parameters": ["<ip>: Dirección IP de la interfaz", "<wildcard>: Máscara inversa"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "router bgp <as-number>",
+          "description": "Inicia el proceso BGP con número de sistema autónomo.",
+          "parameters": ["<as-number>: Número de AS"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "neighbor <ip> remote-as <as>",
+          "description": "Define un vecino BGP con su dirección IP y AS remoto.",
+          "parameters": ["<ip>: Dirección IP del vecino", "<as>: Número de AS remoto"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "no synchronization",
+          "description": "Desactiva la sincronización entre IGP y BGP.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-3-configura-el-nat",
+      "title": "PASO 3 - Configura el NAT",
+      "briefDescription": "Configuración de NAT para traducir direcciones privadas a públicas.",
+      "description": "Se define qué interfaces son inside o outside, se crea un pool de direcciones públicas y se aplica una ACL para controlar qué tráfico se traduce.",
+      "commands": [
+        {
+          "command": "ip nat inside",
+          "description": "Marca una interfaz como fuente de tráfico interno.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat outside",
+          "description": "Marca una interfaz como destino de tráfico externo.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat pool <nombre> <inicio> <fin> netmask <máscara>",
+          "description": "Define un grupo de direcciones públicas para NAT.",
+          "parameters": ["<nombre>: Nombre del pool", "<inicio>: Dirección inicial", "<fin>: Dirección final", "<máscara>: Máscara de subred"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip nat inside source list <acl> pool <nombre> overload",
+          "description": "Asocia una lista de acceso con un pool de NAT y habilita sobrecarga (PAT).",
+          "parameters": ["<acl>: Número de ACL", "<nombre>: Nombre del pool"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list <num> permit <red> <wildcard>",
+          "description": "Define qué tráfico se permite para traducción.",
+          "parameters": ["<num>: Número de la ACL", "<red>: Dirección de red", "<wildcard>: Máscara inversa"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-4-propaga-la-red-publica-por-bgp",
+      "title": "PASO 4 - Propaga la red pública por BGP",
+      "briefDescription": "Publica el segmento público en BGP.",
+      "description": "Se anuncia la red pública en BGP, ya sea asociándola a una interfaz Loopback o creando una ruta estática hacia null (solo una de las dos!), para asegurar que BGP pueda publicarla.",
+      "commands": [
+        {
+          "command": "interface loopback <n>",
+          "description": "Crea una interfaz lógica Loopback.",
+          "parameters": ["<n>: Número de la interfaz Loopback"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip address <ip> <máscara>",
+          "description": "Asigna una dirección IP a una interfaz.",
+          "parameters": ["<ip>: Dirección IP", "<máscara>: Máscara de subred"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip route <red> <máscara> null0",
+          "description": "Crea una ruta estática hacia null0 para hacer que BGP la considere válida.",
+          "parameters": ["<red>: Dirección de red", "<máscara>: Máscara de subred"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <red> mask <máscara>",
+          "description": "Anuncia una red específica en BGP.",
+          "parameters": ["<red>: Dirección de red", "<máscara>: Máscara de subred"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "clear ip bgp *",
+          "description": "Reinicia sesiones BGP para actualizar las tablas de rutas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        }
+      ]
+    },
+    {
+      "id": "paso-5-salida-por-defecto-de-la-red-interna",
+      "title": "PASO 5 - Salida por defecto de la red interna",
+      "briefDescription": "Configura una ruta por defecto usando OSPF.",
+      "description": "Este paso se realiza en el **router de borde** que conecta la red interna con Internet o redes externas. El objetivo es generar una ruta por defecto dentro del protocolo de ruteo interior (como OSPF), para que otros routers internos puedan aprender cómo salir hacia destinos desconocidos, como redes anunciadas por BGP. Esto permite que dispositivos dentro de la red local puedan alcanzar destinos fuera de su segmento directamente conectado.",
+      "commands": [
+        {
+          "command": "ip default-network <red>",
+          "description": "Define una red como punto de salida por defecto.",
+          "parameters": ["<red>: Dirección de red pública"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "default-information originate",
+          "description": "Hace que OSPF publique información por defecto.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-6-comandos-de-validacion",
+      "title": "PASO 6 - Comandos de validación",
+      "briefDescription": "Comandos clave para verificar la operación de toda la configuración.",
+      "description": "Una vez completada la configuración, es fundamental validar que todos los procesos estén funcionando correctamente. Estos comandos permiten revisar adjacencias, tablas de rutas, traducciones NAT y estado de sesiones BGP.",
+      "commands": [
+        {
+          "command": "show ip ospf neighbor",
+          "description": "Muestra las adjacencias OSPF activas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip route",
+          "description": "Muestra la tabla de rutas completa.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip bgp summary",
+          "description": "Muestra el estado de las sesiones BGP.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip bgp",
+          "description": "Muestra la tabla de rutas BGP.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "ping <ip>",
+          "description": "Verifica conectividad básica con un destino específico.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "ping",
+          "description": "Ping extendido para mayor control sobre origen y destino.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "debug ip nat",
+          "description": "Activa la depuración de traducciones NAT.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip nat translations",
+          "description": "Muestra las traducciones NAT activas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        }
+      ]
+    }
+  ]
+}
