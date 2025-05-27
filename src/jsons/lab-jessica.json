@@ -1,0 +1,623 @@
+{
+  "title": "Lab: OSPF, BGP, NAT, DMZ",
+  "id": "lab-jessica",
+  "description": "Esta actividad cubre configuraciones avanzadas en dispositivos Cisco, incluyendo ruteo dinámico con OSPF y BGP, traducción de direcciones (NAT), propagación de rutas públicas y configuración de salida por defecto.",
+  "sections": [
+    {
+      "id": "paso-1-conecta-y-valida",
+      "title": "PASO 1 - Conecta y valida",
+      "briefDescription": "Conexión física y configuración básica de routers.",
+      "description": "Se conectan los equipos según topología, se establece la configuración base (hostname, contraseña enable, usuario VTY) y se asignan direcciones IP a interfaces, incluyendo loopbacks. Finalmente, se validan las conexiones mediante pings directos.",
+      "commands": [
+        {
+          "command": "hostname <nombre>",
+          "description": "Establece el nombre del dispositivo.",
+          "parameters": ["<nombre>: Nombre deseado para el router"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "enable secret class",
+          "description": "Establece la contraseña 'class' para modo privilegiado.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "username redes secret redes",
+          "description": "Crea un usuario con nombre 'redes' y contraseña 'redes'.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "line vty 0 15",
+          "description": "Accede a la configuración de líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "login local",
+          "description": "Habilita autenticación local para acceso VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "transport input telnet",
+          "description": "Permite conexión SSH en las líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-2-habilita-el-ruteo",
+      "title": "PASO 2 - Habilita el ruteo",
+      "briefDescription": "Configuración de OSPF y BGP entre routers.",
+      "description": "Se configura OSPF para comunicación interna entre routers locales y BGP para intercambio de rutas con ISP externo. Se omiten redes privadas deliberadamente en BGP.",
+      "commands": [
+        {
+          "command": "router ospf 1",
+          "description": "Inicia el proceso OSPF con ID 1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <ip> <wildcard> area 0",
+          "description": "Anuncia una red en el área 0 de OSPF.",
+          "parameters": ["<ip>: Dirección IP de la interfaz", "<wildcard>: Máscara inversa"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "router bgp <as-number>",
+          "description": "Inicia el proceso BGP con número de sistema autónomo.",
+          "parameters": ["<as-number>: Número de AS"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "neighbor <ip> remote-as <as>",
+          "description": "Define un vecino BGP con su dirección IP y AS remoto.",
+          "parameters": ["<ip>: Dirección IP del vecino", "<as>: Número de AS remoto"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "no synchronization",
+          "description": "Desactiva la sincronización entre IGP y BGP.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-3-configura-el-nat",
+      "title": "PASO 3 - Configura el NAT",
+      "briefDescription": "Configuración de NAT para traducir direcciones privadas a públicas.",
+      "description": "Se define qué interfaces son inside o outside, se crea un pool de direcciones públicas y se aplica una ACL para controlar qué tráfico se traduce.",
+      "commands": [
+        {
+          "command": "ip nat inside",
+          "description": "Marca una interfaz como fuente de tráfico interno.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat outside",
+          "description": "Marca una interfaz como destino de tráfico externo.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat pool <nombre> <inicio> <fin> netmask <máscara>",
+          "description": "Define un grupo de direcciones públicas para NAT.",
+          "parameters": ["<nombre>: Nombre del pool", "<inicio>: Dirección inicial", "<fin>: Dirección final", "<máscara>: Máscara de subred"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip nat inside source list <acl> pool <nombre> overload",
+          "description": "Asocia una lista de acceso con un pool de NAT y habilita sobrecarga (PAT).",
+          "parameters": ["<acl>: Número de ACL", "<nombre>: Nombre del pool"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list <num> permit <red> <wildcard>",
+          "description": "Define qué tráfico se permite para traducción.",
+          "parameters": ["<num>: Número de la ACL", "<red>: Dirección de red", "<wildcard>: Máscara inversa"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-4-propaga-la-red-publica-por-bgp",
+      "title": "PASO 4 - Propaga la red pública por BGP",
+      "briefDescription": "Publica el segmento público en BGP.",
+      "description": "Se anuncia la red pública en BGP, ya sea asociándola a una interfaz Loopback o creando una ruta estática hacia null (solo una de las dos!), para asegurar que BGP pueda publicarla.",
+      "commands": [
+        {
+          "command": "interface loopback <n>",
+          "description": "Crea una interfaz lógica Loopback.",
+          "parameters": ["<n>: Número de la interfaz Loopback"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip address <ip> <máscara>",
+          "description": "Asigna una dirección IP a una interfaz.",
+          "parameters": ["<ip>: Dirección IP", "<máscara>: Máscara de subred"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip route <red> <máscara> null0",
+          "description": "Crea una ruta estática hacia null0 para hacer que BGP la considere válida.",
+          "parameters": ["<red>: Dirección de red", "<máscara>: Máscara de subred"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <red> mask <máscara>",
+          "description": "Anuncia una red específica en BGP.",
+          "parameters": ["<red>: Dirección de red", "<máscara>: Máscara de subred"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "clear ip bgp *",
+          "description": "Reinicia sesiones BGP para actualizar las tablas de rutas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        }
+      ]
+    },
+    {
+      "id": "paso-5-salida-por-defecto-de-la-red-interna",
+      "title": "PASO 5 - Salida por defecto de la red interna",
+      "briefDescription": "Configura una ruta por defecto usando OSPF.",
+      "description": "Este paso se realiza en el **router de borde** que conecta la red interna con Internet o redes externas. El objetivo es generar una ruta por defecto dentro del protocolo de ruteo interior (como OSPF), para que otros routers internos puedan aprender cómo salir hacia destinos desconocidos, como redes anunciadas por BGP. Esto permite que dispositivos dentro de la red local puedan alcanzar destinos fuera de su segmento directamente conectado.",
+      "commands": [
+        {
+          "command": "ip default-network <red>",
+          "description": "Define una red como punto de salida por defecto.",
+          "parameters": ["<red>: Dirección de red pública"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "default-information originate",
+          "description": "Hace que OSPF publique información por defecto.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-6-habilita-el-servicio-de-http-en-la-dmz",
+      "title": "PASO 6 - Habilita el servicio de HTTP en la DMZ",
+      "briefDescription": "Configuración del servidor HTTP/HTTPS en el switch de la DMZ.",
+      "description": "Este paso consiste en habilitar un servidor web básico en el switch de la DMZ para probar conectividad posterior con políticas de seguridad. Alternativamente, puedes usar una computadora local como servidor HTTP siguiendo esta guía: [Configurar servidor de prueba local](https://developer.mozilla.org/es/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server ).",
+      "commands": [
+        {
+          "command": "ip http server",
+          "description": "Habilita el servidor HTTP no seguro en el switch.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip http secure-server",
+          "description": "Habilita el servidor HTTPS seguro en el switch.",
+          "parameters": [],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-7-configura-la-proteccion-desde-y-hacia-la-red-interna",
+      "title": "PASO 7 - Configura la protección desde y hacia la red interna",
+      "briefDescription": "Implementación de ACLs básicas para controlar tráfico hacia la LAN.",
+      "description": "Se configuran listas de acceso en el router frontera (SanJose1) para restringir el tráfico que entra y sale de la interfaz conectada a la red interna (LAN), permitiendo solo tráfico autorizado y bloqueando accesos no deseados.",
+      "commands": [
+        {
+          "command": "access-list 101 permit ip 172.16.1.0 0.0.0.255 any",
+          "description": "Permite tráfico desde la subred 172.16.1.0/24 hacia cualquier destino.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 101 permit ip 172.16.32.0 0.0.0.255 any",
+          "description": "Permite tráfico desde la subred 172.16.32.0/24 hacia cualquier destino.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 101 deny ip any any",
+          "description": "Bloquea cualquier otro tráfico entrante.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface fa0/1",
+          "description": "Selecciona la interfaz conectada a la LAN.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 101 in",
+          "description": "Aplica la lista de acceso 101 en dirección entrante.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "access-list 102 permit icmp any any administratively-prohibited",
+          "description": "Permite mensajes ICMP de prohibición administrativa.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit icmp any any echo-reply",
+          "description": "Permite respuestas de ping.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit icmp any any packet-too-big",
+          "description": "Permite mensajes ICMP por paquetes demasiado grandes.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit icmp any any time-exceeded",
+          "description": "Permite mensajes ICMP por tiempo excedido (traceroute).",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit icmp any any unreachable",
+          "description": "Permite mensajes ICMP de destino inalcanzable.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit tcp host <http-server-ip> 172.17.32.0 0.0.0.255 established",
+          "description": "Permite conexiones TCP establecidas desde el servidor HTTP hacia la LAN.",
+          "parameters": ["<http-server-ip>: Dirección IP del servidor HTTP"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 permit tcp host <switch-dmz-ip> 172.17.32.0 0.0.0.255 established",
+          "description": "Permite conexiones TCP establecidas desde el switch DMZ hacia la LAN.",
+          "parameters": ["<switch-dmz-ip>: Dirección IP del switch DMZ"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 102 deny ip any any",
+          "description": "Bloquea cualquier otro tráfico saliente.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 102 out",
+          "description": "Aplica la lista de acceso 102 en dirección saliente.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-8-configura-las-politicas-de-la-dmz",
+      "title": "PASO 8 - Configura las políticas de la DMZ",
+      "briefDescription": "Listas de acceso para controlar tráfico hacia y desde la DMZ.",
+      "description": "Se aplican listas de acceso para proteger la DMZ, limitando qué tipos de tráfico pueden entrar o salir de esta zona, asegurando comunicación segura con la LAN e Internet.",
+      "commands": [
+        {
+          "command": "access-list 111 permit ip 172.16.64.0 0.0.0.255 any",
+          "description": "Permite tráfico desde la DMZ hacia cualquier destino.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 111 deny ip any any",
+          "description": "Bloquea cualquier otro tráfico entrante a la DMZ.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface fa1/1",
+          "description": "Selecciona la interfaz conectada a la DMZ.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 111 in",
+          "description": "Aplica la lista de acceso 111 en dirección entrante.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "access-list 112 permit udp any host 172.16.1.2 eq domain",
+          "description": "Permite consultas DNS UDP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit tcp any host 172.16.1.2 eq 53",
+          "description": "Permite consultas DNS TCP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit tcp any host 172.16.64.2 eq 80",
+          "description": "Permite tráfico HTTP hacia el servidor de la DMZ.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit tcp 172.16.32.0 0.0.0.255 host 172.16.64.2 eq telnet",
+          "description": "Permite Telnet desde la LAN hacia la DMZ.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit icmp any any administratively-prohibited",
+          "description": "Permite mensajes ICMP de prohibición administrativa.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit icmp any any echo-reply",
+          "description": "Permite respuestas de ping.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit icmp any any packet-too-big",
+          "description": "Permite mensajes ICMP por paquetes demasiado grandes.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit icmp any any time-exceeded",
+          "description": "Permite mensajes ICMP por tiempo excedido.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 permit icmp any any unreachable",
+          "description": "Permite mensajes ICMP de destino inalcanzable.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 112 deny ip any any",
+          "description": "Bloquea cualquier otro tráfico saliente.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 112 out",
+          "description": "Aplica la lista de acceso 112 en dirección saliente.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-9-configura-las-politicas-de-internet",
+      "title": "PASO 9 - Configura las políticas de internet",
+      "briefDescription": "ACLs para filtrar tráfico entrante y saliente desde Internet.",
+      "description": "Se implementan listas de acceso en la interfaz conectada a Internet (fa0/0) para prevenir spoofing y ataques comunes, además de controlar tráfico legítimo.",
+      "commands": [
+        {
+          "command": "access-list 121 deny ip 172.16.0.0 0.0.255.255 any",
+          "description": "Bloquea direcciones privadas falsificadas.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 121 deny ip 127.0.0.0 0.255.255.255 any",
+          "description": "Bloquea tráfico de loopback.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 121 deny ip 224.0.0.0 31.255.255.255 any",
+          "description": "Bloquea tráfico multicast.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 121 permit ip any any",
+          "description": "Permite el resto del tráfico entrante.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface Fa0/0",
+          "description": "Selecciona la interfaz conectada a Internet.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 121 in",
+          "description": "Aplica la lista de acceso 121 en dirección entrante.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "access-list 122 permit icmp any any echo-reply",
+          "description": "Permite respuestas de ping desde Internet.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 122 permit icmp any any time-exceeded",
+          "description": "Permite mensajes ICMP por tiempo excedido.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 122 deny ip 172.16.64.0 0.0.0.255 any",
+          "description": "Bloquea tráfico originado desde la DMZ.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list 122 permit ip any any",
+          "description": "Permite el resto del tráfico saliente.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group 122 out",
+          "description": "Aplica la lista de acceso 122 en dirección saliente.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-10-content-based-access-control",
+      "title": "PASO 10 - Content-Based Access Control",
+      "briefDescription": "Inspección de tráfico basada en contenido.",
+      "description": "Se activa la inspección CBAC en el router SanJosé1 para monitorear conexiones dinámicas y permitir únicamente tráfico válido y establecido.",
+      "commands": [
+        {
+          "command": "ip inspect name STANDARD ftp",
+          "description": "Crea una política de inspección CBAC para FTP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD http",
+          "description": "Agrega HTTP a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD smtp",
+          "description": "Agrega SMTP a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD tcp",
+          "description": "Agrega TCP genérico a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD telnet",
+          "description": "Agrega Telnet a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD tftp",
+          "description": "Agrega TFTP a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD udp",
+          "description": "Agrega UDP genérico a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect name STANDARD realaudio",
+          "description": "Agrega RealAudio a la política de inspección.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect dns-timeout 15",
+          "description": "Establece timeout de conexión DNS.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect udp idle-time 1800",
+          "description": "Establece tiempo de espera para conexiones UDP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface fa0/1",
+          "description": "Selecciona la interfaz conectada a la LAN.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect STANDARD in",
+          "description": "Aplica la política CBAC en dirección entrante.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "interface fa0/0",
+          "description": "Selecciona la interfaz conectada a Internet.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip inspect STANDARD in",
+          "description": "Aplica la política CBAC en dirección entrante.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "validaciones-finales",
+      "title": "Validaciones Finales",
+      "briefDescription": "Comandos clave para verificar la operación de toda la configuración.",
+      "description": "Una vez completada la configuración, es fundamental validar que todos los procesos estén funcionando correctamente. Estos comandos permiten revisar adjacencias, tablas de rutas, traducciones NAT, estados de sesiones BGP y reglas de firewall.",
+      "commands": [
+        {
+          "command": "ping <ip>",
+          "description": "Verifica conectividad básica con un destino específico.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "telnet <ip> <puerto>",
+          "description": "Verifica conectividad TCP a un puerto específico.",
+          "parameters": ["<ip>: Dirección IP objetivo", "<puerto>: Puerto destino"],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip inspect all",
+          "description": "Muestra el estado de todas las inspecciones CBAC.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show access-lists",
+          "description": "Muestra las listas de acceso configuradas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip route",
+          "description": "Muestra la tabla de rutas completa.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip bgp summary",
+          "description": "Muestra el estado de las sesiones BGP.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "debug ip nat",
+          "description": "Activa la depuración de traducciones NAT.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip nat translations",
+          "description": "Muestra las traducciones NAT activas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        },
+        {
+          "command": "show ip ospf neighbor",
+          "description": "Muestra las adjacencias OSPF activas.",
+          "parameters": [],
+          "mode": "(privilegiado)"
+        }
+      ]
+    }
+  ]
+}

@@ -19,7 +19,7 @@ export default function SectionCard({ sectionData, copySectionLink }) {
     <>
       {sectionData?.sections.map((section, index) => (
         <Card fullWidth key={index} className="mb-4 mt-4 p-2" id={section.id}>
-          <CardHeader className="text-xl font-bold">
+          <CardHeader className="text-xl font-bold flex flex-col items-start">
             <Button
               className="bg-clear text-xl font-bold truncate"
               startContent={<LinkIcon />}
@@ -28,8 +28,12 @@ export default function SectionCard({ sectionData, copySectionLink }) {
             >
               {section.title}
             </Button>
+            <p className="mt-2 ml-12 text-sm text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap text-start max-w-40 lg:max-w-3xl">
+              {section?.briefDescription}
+            </p>
           </CardHeader>
           <CardBody className="flex flex-col">
+            <p className="pl-4 pr-4 mb-4 text-sm">{section?.description}</p>
             <Table key={index} isStriped>
               <TableHeader>
                 <TableColumn>

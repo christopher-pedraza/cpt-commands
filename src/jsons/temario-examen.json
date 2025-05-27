@@ -1,0 +1,441 @@
+{
+  "title": "Temario Examen Práctico Módulo 2 - WAN",
+  "id": "temario-examen-practico-modulo-2-wan",
+  "description": "Este documento contiene todos los comandos y configuraciones necesarias para cumplir con los puntos del temario del examen práctico del módulo 2 sobre redes WAN.",
+  "sections": [
+    {
+      "id": "configuracion-basica-de-dispositivos-intermediarios",
+      "title": "Configuración básica de dispositivos intermediarios (routers & switches)",
+      "briefDescription": "Configura nombre, usuarios, contraseñas y acceso a dispositivos Cisco.",
+      "description": "Se establece la configuración básica en routers y switches, incluyendo hostname, usuarios locales, contraseñas cifradas y acceso Telnet seguro.",
+      "commands": [
+        {
+          "command": "hostname <nombre>",
+          "description": "Establece el nombre del dispositivo.",
+          "parameters": ["<nombre>: Nombre deseado"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "enable secret <contraseña>",
+          "description": "Establece la contraseña cifrada para modo privilegiado.",
+          "parameters": ["<contraseña>: Contraseña secreta"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "username <usuario> privilege 15 password <contraseña>",
+          "description": "Crea un usuario local con privilegios elevados.",
+          "parameters": ["<usuario>: Nombre de usuario", "<contraseña>: Contraseña asociada"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "line vty 0 4",
+          "description": "Accede a las líneas VTY para configurar acceso remoto.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "login local",
+          "description": "Habilita autenticación local en las líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "transport input ssh",
+          "description": "Permite solo conexiones SSH seguras.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        }
+      ]
+    },
+    {
+      "id": "direccionamiento-ip",
+      "title": "Asignación de IPs",
+      "briefDescription": "Configura direcciones IP en interfaces y loopbacks.",
+      "description": "Se asignan direcciones IP a interfaces físicas y lógicas (loopback) para permitir conectividad entre dispositivos.",
+      "commands": [
+        {
+          "command": "interface <tipo>",
+          "description": "Selecciona una interfaz física o lógica.",
+          "parameters": ["<tipo>: Ej. fa0/0, s0/0/0, loopback0"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip address <ip> <mascara>",
+          "description": "Asigna una dirección IP y máscara a la interfaz.",
+          "parameters": ["<ip>: Dirección IP", "<mascara>: Máscara de subred"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "no shutdown",
+          "description": "Activa la interfaz seleccionada.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "ruteo-estatico",
+      "title": "Ruteo estático (IGP/EGP)",
+      "briefDescription": "Configura rutas estáticas entre routers.",
+      "description": "Se configuran rutas manuales para alcanzar redes remotas que no están directamente conectadas.",
+      "commands": [
+        {
+          "command": "ip route <red> <mascara> <next-hop>",
+          "description": "Agrega una ruta estática hacia una red específica.",
+          "parameters": ["<red>: Dirección de red destino", "<mascara>: Máscara de subred", "<next-hop>: Dirección IP del siguiente salto"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip route 0.0.0.0 0.0.0.0 <next-hop>",
+          "description": "Agrega una ruta por defecto.",
+          "parameters": ["<next-hop>: Dirección IP del siguiente salto"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "ospf",
+      "title": "OSPF (IGP)",
+      "briefDescription": "Configura protocolo OSPF para ruteo dinámico interior.",
+      "description": "Se habilita el protocolo de ruteo dinámico OSPF para descubrir y actualizar automáticamente las rutas internas.",
+      "commands": [
+        {
+          "command": "router ospf <proceso>",
+          "description": "Inicia un proceso OSPF.",
+          "parameters": ["<proceso>: Número de proceso"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <ip> <wildcard> area <area>",
+          "description": "Anuncia una red en un área específica de OSPF.",
+          "parameters": ["<ip>: Dirección IP de red", "<wildcard>: Máscara inversa", "<area>: Área OSPF"],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "bgp",
+      "title": "BGP (EGP)",
+      "briefDescription": "Configura protocolo BGP para ruteo dinámico exterior.",
+      "description": "Se configura el protocolo BGP para intercambio de rutas entre sistemas autónomos.",
+      "commands": [
+        {
+          "command": "router bgp <as>",
+          "description": "Inicia un proceso BGP con número de AS.",
+          "parameters": ["<as>: Número de sistema autónomo"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "neighbor <ip> remote-as <as>",
+          "description": "Define un vecino BGP con su dirección y AS.",
+          "parameters": ["<ip>: Dirección IP del vecino", "<as>: Número de AS remoto"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "network <red> mask <mascara>",
+          "description": "Anuncia una red pública en BGP.",
+          "parameters": ["<red>: Dirección de red", "<mascara>: Máscara de subred"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "no synchronization",
+          "description": "Desactiva la sincronización entre IGP y BGP.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        }
+      ]
+    },
+    {
+      "id": "ruta-por-defecto-y-su-distribucion",
+      "title": "Ruta por defecto y su distribución",
+      "briefDescription": "Configura y anuncia una ruta por defecto.",
+      "description": "Se genera una ruta por defecto y se anuncia dentro de un protocolo de ruteo como OSPF.",
+      "commands": [
+        {
+          "command": "ip route 0.0.0.0 0.0.0.0 <next-hop>",
+          "description": "Crea una ruta por defecto manualmente.",
+          "parameters": ["<next-hop>: Dirección IP del siguiente salto"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "default-information originate",
+          "description": "Anuncia la ruta por defecto mediante OSPF.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "ip default-network <red>",
+          "description": "Define una red como salida por defecto.",
+          "parameters": ["<red>: Dirección de red pública"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "habilitar-conectividad-extremo-a-extremo",
+      "title": "Habilitar conectividad de extremo a extremo",
+      "briefDescription": "Valida comunicación completa entre todos los segmentos.",
+      "description": "Se validan todas las configuraciones realizadas mediante pruebas de conectividad (ping, traceroute, telnet).",
+      "commands": [
+        {
+          "command": "ping <ip>",
+          "description": "Verifica conectividad básica con un destino específico.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "#"
+        },
+        {
+          "command": "traceroute <ip>",
+          "description": "Muestra la ruta tomada hacia un destino.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "#"
+        },
+        {
+          "command": "telnet <ip> <puerto>",
+          "description": "Verifica conectividad TCP a un puerto específico.",
+          "parameters": ["<ip>: Dirección IP objetivo", "<puerto>: Puerto destino"],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "dhcp-para-usuario-final",
+      "title": "DHCP para usuario final (PC/laptop)",
+      "briefDescription": "Configura servidor DHCP en router para clientes.",
+      "description": "Se crea un pool DHCP para asignar direcciones IP dinámicamente a hosts en la LAN.",
+      "commands": [
+        {
+          "command": "ip dhcp pool <nombre>",
+          "description": "Crea un pool DHCP con nombre específico.",
+          "parameters": ["<nombre>: Nombre del grupo de direcciones"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "network <red> <mascara>",
+          "description": "Define la red que se asignará.",
+          "parameters": ["<red>: Dirección de red", "<mascara>: Máscara de subred"],
+          "mode": "(dhcp-config)#"
+        },
+        {
+          "command": "default-router <ip>",
+          "description": "Especifica la puerta de enlace predeterminada.",
+          "parameters": ["<ip>: Dirección IP del gateway"],
+          "mode": "(dhcp-config)#"
+        },
+        {
+          "command": "dns-server <ip>",
+          "description": "Especifica el servidor DNS.",
+          "parameters": ["<ip>: Dirección IP del servidor DNS"],
+          "mode": "(dhcp-config)#"
+        },
+        {
+          "command": "lease <dias>",
+          "description": "Establece la duración del préstamo de IP.",
+          "parameters": ["<dias>: Duración en días"],
+          "mode": "(dhcp-config)#"
+        }
+      ]
+    },
+    {
+      "id": "telnet-para-todos-los-equipos",
+      "title": "Telnet para todos los equipos intermediarios",
+      "briefDescription": "Configura acceso Telnet seguro en todos los equipos.",
+      "description": "Se asegura que todos los routers y switches permitan acceso Telnet desde la red local con autenticación local.",
+      "commands": [
+        {
+          "command": "line vty 0 4",
+          "description": "Accede a las líneas VTY para configurar acceso remoto.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "login local",
+          "description": "Habilita autenticación local en las líneas VTY.",
+          "parameters": [],
+          "mode": "(config-line)#"
+        },
+        {
+          "command": "password <contraseña>",
+          "description": "Establece una contraseña para acceso Telnet.",
+          "parameters": ["<contraseña>: Contraseña de línea"],
+          "mode": "(config-line)#"
+        }
+      ]
+    },
+    {
+      "id": "http-para-pruebas-de-control",
+      "title": "HTTP para pruebas de control de acceso",
+      "briefDescription": "Habilita servicios HTTP/HTTPS para pruebas.",
+      "description": "Se activa el servidor web integrado del switch o se usa uno externo para validar políticas de acceso.",
+      "commands": [
+        {
+          "command": "ip http server",
+          "description": "Habilita el servidor HTTP no seguro.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip http secure-server",
+          "description": "Habilita el servidor HTTPS seguro.",
+          "parameters": [],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "nat-importante-saber-rangos",
+      "title": "NAT (importante saber diferenciar rangos públicos y privados)",
+      "briefDescription": "Configura traducción de direcciones NAT.",
+      "description": "Se define qué tráfico debe ser traducido, usando ACLs y pools de direcciones públicas.",
+      "commands": [
+        {
+          "command": "ip nat inside",
+          "description": "Marca una interfaz como fuente de tráfico interno.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat outside",
+          "description": "Marca una interfaz como destino de tráfico externo.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip nat pool <nombre> <inicio> <fin> netmask <máscara>",
+          "description": "Define un grupo de direcciones públicas para NAT.",
+          "parameters": ["<nombre>: Nombre del pool", "<inicio>: Dirección inicial", "<fin>: Dirección final", "<máscara>: Máscara de subred"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip nat inside source list <acl> pool <nombre> overload",
+          "description": "Asocia una lista de acceso con un pool de NAT y habilita sobrecarga (PAT).",
+          "parameters": ["<acl>: Número de ACL", "<nombre>: Nombre del pool"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list <num> permit <red> <wildcard>",
+          "description": "Define qué tráfico se permite para traducción.",
+          "parameters": ["<num>: Número de la ACL", "<red>: Dirección de red", "<wildcard>: Máscara inversa"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "listas-de-control-de-acceso",
+      "title": "Listas de control de acceso",
+      "briefDescription": "Configura políticas de acceso según lo solicitado.",
+      "description": "Se implementan listas de acceso para restringir o permitir ciertos tipos de tráfico según las políticas definidas.",
+      "commands": [
+        {
+          "command": "access-list <num> permit ip <red> <wildcard> any",
+          "description": "Permite tráfico desde una red específica hacia cualquier destino.",
+          "parameters": ["<num>: Número de la ACL", "<red>: Dirección de red", "<wildcard>: Máscara inversa"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list <num> deny ip any any",
+          "description": "Bloquea cualquier otro tráfico no especificado.",
+          "parameters": ["<num>: Número de la ACL"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "interface <tipo>",
+          "description": "Selecciona una interfaz para aplicar la ACL.",
+          "parameters": ["<tipo>: Ej. fa0/0, s0/0/0"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip access-group <num> in/out",
+          "description": "Aplica la lista de acceso en dirección entrante o saliente.",
+          "parameters": ["<num>: Número de la ACL"],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "validaciones-finales",
+      "title": "Validaciones Finales",
+      "briefDescription": "Comandos clave para verificar la operación de toda la configuración.",
+      "description": "Una vez completada la configuración, es fundamental validar que todos los procesos estén funcionando correctamente. Estos comandos permiten revisar el estado de dispositivos, conectividad, ruteo, servicios y políticas de seguridad.",
+      "commands": [
+        {
+          "command": "show running-config",
+          "description": "Muestra la configuración activa del dispositivo.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "ping <ip>",
+          "description": "Verifica conectividad básica con un destino específico.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "#"
+        },
+        {
+          "command": "traceroute <ip>",
+          "description": "Muestra la ruta tomada hacia un destino.",
+          "parameters": ["<ip>: Dirección IP objetivo"],
+          "mode": "#"
+        },
+        {
+          "command": "telnet <ip> <puerto>",
+          "description": "Verifica conectividad TCP a un puerto específico.",
+          "parameters": ["<ip>: Dirección IP objetivo", "<puerto>: Puerto destino"],
+          "mode": "#"
+        },
+        {
+          "command": "show ip route",
+          "description": "Muestra la tabla de rutas completa.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip ospf neighbor",
+          "description": "Muestra las adjacencias OSPF activas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip bgp summary",
+          "description": "Muestra el estado de las sesiones BGP.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip bgp",
+          "description": "Muestra la tabla de rutas BGP.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip dhcp binding",
+          "description": "Muestra las asignaciones DHCP realizadas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip nat translations",
+          "description": "Muestra las traducciones NAT activas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show access-lists",
+          "description": "Muestra las listas de acceso configuradas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip interface brief",
+          "description": "Muestra el estado resumido de interfaces y sus direcciones IP.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "debug ip nat",
+          "description": "Activa la depuración de traducciones NAT.",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    }
+  ]
+}

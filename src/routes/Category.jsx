@@ -76,12 +76,12 @@ export default function Category() {
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-8">
-      <div className="w-3/4 lg:w-7/8 flex flex-col items-start">
+      <div className="w-7/8 lg:w-3/4 flex flex-col items-start">
         <Button startContent={<BackIcon />} onPress={returnToHome}>
           Return
         </Button>
       </div>
-      <div className="w-3/4 lg:w-7/8 flex flex-col items-center justify-center">
+      <div className="w-7/8 lg:w-3/4 flex flex-col items-center justify-center">
         <Button
           className="w-full lg:w-1/2 bg-clear"
           startContent={<LinkIcon />}
