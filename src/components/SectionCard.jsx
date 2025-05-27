@@ -28,8 +28,12 @@ export default function SectionCard({ sectionData, copySectionLink }) {
             >
               {section.title}
             </Button>
+            <p className="mt-2 text-sm text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap text-start max-w-40 lg:max-w-3xl">
+              {section?.briefDescription}
+            </p>
           </CardHeader>
           <CardBody className="flex flex-col">
+            <p className="pl-4 pr-4 mb-4 text-sm">{section?.description}</p>
             <Table key={index} isStriped>
               <TableHeader>
                 <TableColumn>
