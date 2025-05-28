@@ -44,9 +44,50 @@
           "mode": "(config)#"
         },
         {
+          "command": "username <username> secret <password>",
+          "description": "Creates a local user with an encrypted password.",
+          "parameters": [
+            "<username>: The desired username",
+            "<password>: The encrypted password for the user"
+          ],
+          "mode": "(config)#"
+        },
+        {
           "command": "banner motd #<message>#",
           "description": "Sets a Message of the Day (MOTD) banner",
           "parameters": ["<message>: The message inside delimiters"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "setup-switch-ip",
+      "title": "Set Up IP Address on a Switch",
+      "briefDescription": "Assigns an IP address to a Layer 3 interface on the switch and sets a default gateway.",
+      "description": "This section explains how to configure an IP address on a switch by assigning it to a VLAN interface (usually VLAN 1), activating the interface, and setting a default gateway for remote access.",
+      "commands": [
+        {
+          "command": "interface vlan1",
+          "description": "Enters configuration mode for the VLAN 1 interface.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip address <ip> <mask>",
+          "description": "Assigns an IP address and subnet mask to the VLAN interface.",
+          "parameters": ["<ip>: The desired IP address", "<mask>: Subnet mask (e.g., 255.255.255.0)"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "no shutdown",
+          "description": "Enables the VLAN interface.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip default-gateway <ip>",
+          "description": "Sets the default gateway for the switch.",
+          "parameters": ["<ip>: IP address of the default gateway/router"],
           "mode": "(config)#"
         }
       ]
