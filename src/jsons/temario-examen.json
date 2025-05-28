@@ -22,13 +22,13 @@
           "mode": "(config)#"
         },
         {
-          "command": "username <usuario> privilege 15 password <contraseña>",
+          "command": "username <usuario> secret <contraseña>",
           "description": "Crea un usuario local con privilegios elevados.",
           "parameters": ["<usuario>: Nombre de usuario", "<contraseña>: Contraseña asociada"],
           "mode": "(config)#"
         },
         {
-          "command": "line vty 0 4",
+          "command": "line vty 0 15",
           "description": "Accede a las líneas VTY para configurar acceso remoto.",
           "parameters": [],
           "mode": "(config-line)#"
@@ -40,10 +40,48 @@
           "mode": "(config-line)#"
         },
         {
-          "command": "transport input ssh",
-          "description": "Permite solo conexiones SSH seguras.",
+          "command": "transport input telnet",
+          "description": "Permite solo conexiones telnet.",
           "parameters": [],
           "mode": "(config-line)#"
+        }
+      ]
+    },
+    {
+      "id": "setup-switch-ip",
+      "title": "Configuración de IP en interfaz VLAN (switch)",
+      "briefDescription": "Asigna una IP a una interfaz VLAN en un switch.",
+      "description": "En switches Cisco, se usa una interfaz lógica VLAN (por ejemplo, VLAN1) para administración remota. Es necesario activarla con 'no shutdown' para que funcione correctamente.",
+      "commands": [
+        {
+          "command": "interface vlan1",
+          "description": "Accede a la interfaz VLAN1 para configuración.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "ip address <ip> <mascara>",
+          "description": "Asigna una dirección IP y máscara a la interfaz VLAN.",
+          "parameters": ["<ip>: Dirección IP", "<mascara>: Máscara de subred"],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "no shutdown",
+          "description": "Activa la interfaz VLAN.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        },
+        {
+          "command": "ip default-gateway <ip>",
+          "description": "Establece la puerta de enlace predeterminada para el switch.",
+          "parameters": ["<ip>: Dirección IP del router/gateway"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "show ip interface brief",
+          "description": "Verifica que la interfaz VLAN tenga dirección IP y esté up.",
+          "parameters": [],
+          "mode": "#"
         }
       ]
     },
@@ -97,7 +135,7 @@
       "id": "ospf",
       "title": "OSPF (IGP)",
       "briefDescription": "Configura protocolo OSPF para ruteo dinámico interior.",
-      "description": "Se habilita el protocolo de ruteo dinámico OSPF para descubrir y actualizar automáticamente las rutas internas.",
+      "description": "Se configura el protocolo de ruteo dinámico OSPF, permitiendo el descubrimiento automático de rutas y la actualización dinámica de tablas de ruteo entre routers dentro del mismo dominio. Incluye la definición de áreas, control de interfaces pasivas, propagación de rutas por defecto y ajustes avanzados de costos.",
       "commands": [
         {
           "command": "router ospf <proceso>",
@@ -110,6 +148,54 @@
           "description": "Anuncia una red en un área específica de OSPF.",
           "parameters": ["<ip>: Dirección IP de red", "<wildcard>: Máscara inversa", "<area>: Área OSPF"],
           "mode": "(config-router)#"
+        },
+        {
+          "command": "passive-interface <tipo>",
+          "description": "Evita que OSPF envíe mensajes por una interfaz (evita adjacencias no deseadas).",
+          "parameters": ["<tipo>: Ej. fa0/0, loopback0"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "router-id <ip>",
+          "description": "Establece manualmente el Router-ID del proceso OSPF.",
+          "parameters": ["<ip>: Dirección IP deseada como router-id"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "default-information originate",
+          "description": "Anuncia una ruta por defecto dentro de OSPF.",
+          "parameters": [],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "neighbor <ip>",
+          "description": "Define vecino manualmente (útil en redes NBMA).",
+          "parameters": ["<ip>: Dirección IP del vecino"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "auto-cost reference-bandwidth <valor>",
+          "description": "Ajusta el cálculo del costo basado en ancho de banda.",
+          "parameters": ["<valor>: En Mbps (ej: 1000)"],
+          "mode": "(config-router)#"
+        },
+        {
+          "command": "show ip ospf interface",
+          "description": "Muestra detalles de interfaces participantes en OSPF.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip ospf neighbor",
+          "description": "Muestra las adjacencias OSPF activas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show ip protocols",
+          "description": "Verifica los parámetros de protocolos de ruteo activos.",
+          "parameters": [],
+          "mode": "#"
         }
       ]
     },
@@ -201,8 +287,14 @@
       "id": "dhcp-para-usuario-final",
       "title": "DHCP para usuario final (PC/laptop)",
       "briefDescription": "Configura servidor DHCP en router para clientes.",
-      "description": "Se crea un pool DHCP para asignar direcciones IP dinámicamente a hosts en la LAN.",
+      "description": "Se crea un pool DHCP para asignar direcciones IP dinámicamente a hosts en la LAN. También se pueden excluir direcciones reservadas o usadas por otros dispositivos.",
       "commands": [
+        {
+          "command": "ip dhcp excluded-address <inicio> <fin>",
+          "description": "Excluye un rango de direcciones IP del pool DHCP.",
+          "parameters": ["<inicio>: Dirección inicial a excluir", "<fin>: Dirección final a excluir"],
+          "mode": "(config)#"
+        },
         {
           "command": "ip dhcp pool <nombre>",
           "description": "Crea un pool DHCP con nombre específico.",
@@ -285,8 +377,14 @@
       "id": "nat-importante-saber-rangos",
       "title": "NAT (importante saber diferenciar rangos públicos y privados)",
       "briefDescription": "Configura traducción de direcciones NAT.",
-      "description": "Se define qué tráfico debe ser traducido, usando ACLs y pools de direcciones públicas.",
+      "description": "Se define qué tráfico debe ser traducido, usando ACLs y pools de direcciones públicas. También se puede usar PAT (overload) para conservar direcciones.",
       "commands": [
+        {
+          "command": "interface <tipo>",
+          "description": "Selecciona una interfaz física.",
+          "parameters": ["<tipo>: Ej. fa0/0, s0/0/0"],
+          "mode": "(config-if)#"
+        },
         {
           "command": "ip nat inside",
           "description": "Marca una interfaz como fuente de tráfico interno.",
@@ -316,6 +414,24 @@
           "description": "Define qué tráfico se permite para traducción.",
           "parameters": ["<num>: Número de la ACL", "<red>: Dirección de red", "<wildcard>: Máscara inversa"],
           "mode": "(config)#"
+        },
+        {
+          "command": "ip nat inside source static <interno> <externo>",
+          "description": "Crea una traducción estática de dirección NAT.",
+          "parameters": ["<interno>: Dirección IP interna", "<externo>: Dirección IP pública"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "show ip nat translations",
+          "description": "Muestra las traducciones NAT activas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "debug ip nat",
+          "description": "Activa la depuración de traducciones NAT.",
+          "parameters": [],
+          "mode": "#"
         }
       ]
     },
@@ -338,6 +454,18 @@
           "mode": "(config)#"
         },
         {
+          "command": "access-list <num> permit tcp any any eq <puerto>",
+          "description": "Permite tráfico TCP hacia un puerto específico.",
+          "parameters": ["<num>: Número de la ACL", "<puerto>: Puerto destino (ej. 80)"],
+          "mode": "(config)#"
+        },
+        {
+          "command": "access-list <num> permit icmp any any echo",
+          "description": "Permite pings entrantes.",
+          "parameters": ["<num>: Número de la ACL"],
+          "mode": "(config)#"
+        },
+        {
           "command": "interface <tipo>",
           "description": "Selecciona una interfaz para aplicar la ACL.",
           "parameters": ["<tipo>: Ej. fa0/0, s0/0/0"],
@@ -348,6 +476,12 @@
           "description": "Aplica la lista de acceso en dirección entrante o saliente.",
           "parameters": ["<num>: Número de la ACL"],
           "mode": "(config-if)#"
+        },
+        {
+          "command": "show access-lists",
+          "description": "Muestra las listas de acceso configuradas.",
+          "parameters": [],
+          "mode": "#"
         }
       ]
     },
