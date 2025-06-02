@@ -1,0 +1,317 @@
+{
+  "title": "Configuración de IPsec Site-to-Site VPN",
+  "id": "ipsec-site-to-site-vpn",
+  "description": "Este documento contiene los pasos y comandos necesarios para configurar una conexión segura mediante IPsec entre dos routers (R1 y R3). Incluye habilitación del paquete de seguridad, definición de tráfico interesante, configuración de fases IKEv1 y validación de la conexión.",
+  "sections": [
+    {
+      "id": "paso-1-test-connectivity",
+      "title": "PASO 1 - Prueba de conectividad básica",
+      "briefDescription": "Verifica conectividad entre redes antes de configurar la VPN.",
+      "description": "Antes de configurar la VPN, se debe asegurar conectividad básica entre las redes LAN de ambos routers a través de sus interfaces WAN.",
+      "commands": [
+        {
+          "command": "ping <ip>",
+          "description": "Verifica conectividad básica entre PC-A y PC-C.",
+          "parameters": ["<ip>: Dirección IP de destino (ej. 192.168.3.3)"],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "paso-2-enable-security-license",
+      "title": "PASO 2 - Habilita licencia de seguridad",
+      "briefDescription": "Activa el paquete de tecnología de seguridad en el router.",
+      "description": "Se activa el paquete de seguridad necesario para usar funciones criptográficas como IPsec y ISAKMP.",
+      "commands": [
+        {
+          "command": "license boot module c1900 technology-package securityk9",
+          "description": "Habilita el paquete de seguridad en el router.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "copy running-config startup-config",
+          "description": "Guarda la configuración actual.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "reload",
+          "description": "Reinicia el router para aplicar la licencia.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show version",
+          "description": "Verifica que el paquete de seguridad esté activo.",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    },
+    {
+      "id": "paso-3-identificar-trafico-interesante",
+      "title": "PASO 3 - Identificar tráfico interesante",
+      "briefDescription": "Define qué tráfico debe ser protegido por la VPN.",
+      "description": "Se configura una ACL para identificar el tráfico entre redes locales que se va a cifrar mediante IPsec.",
+      "commands": [
+        {
+          "command": "access-list 110 permit ip 192.168.1.0 0.0.0.255 192.168.3.0 0.0.0.255",
+          "description": "Permite tráfico entre la red LAN de R1 y R3.",
+          "parameters": [],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-4-configurar-isakmp-phase-1",
+      "title": "PASO 4 - Configurar IKE Phase 1 (ISAKMP)",
+      "briefDescription": "Establece parámetros de autenticación y encriptación para la fase 1.",
+      "description": "Se definen políticas ISAKMP y se establece una clave pre-compartida con el otro extremo de la VPN.",
+      "commands": [
+        {
+          "command": "crypto isakmp policy 10",
+          "description": "Crea una política ISAKMP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "encryption aes 256",
+          "description": "Configura AES-256 como método de encriptación.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "authentication pre-share",
+          "description": "Usa autenticación previa compartida (pre-shared key).",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "group 5",
+          "description": "Selecciona Diffie-Hellman grupo 5.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "exit",
+          "description": "Sale del modo de configuración ISAKMP.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "crypto isakmp key vpnpa55 address <ip>",
+          "description": "Asigna una clave pre-compartida al peer remoto.",
+          "parameters": ["<ip>: Dirección IP del otro router (R3)"],
+          "mode": "(config)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-5-configurar-ipsec-phase-2",
+      "title": "PASO 5 - Configurar IKE Phase 2 (IPsec)",
+      "briefDescription": "Establece transform-set y crypto map para protección de datos.",
+      "description": "Se define cómo se va a proteger el tráfico una vez establecida la fase 1 de IKE.",
+      "commands": [
+        {
+          "command": "crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac",
+          "description": "Define un conjunto de transformaciones ESP-AES y SHA HMAC.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto map VPN-MAP 10 ipsec-isakmp",
+          "description": "Crea un mapa criptográfico vinculado a IPsec e ISAKMP.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "description VPN connection to R3",
+          "description": "Agrega una descripción al crypto map.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "set peer <ip>",
+          "description": "Especifica la dirección IP del otro extremo del túnel IPsec. Es la dirección donde entra el tráfico cifrado en el router remoto, no desde dónde sale en el local.",
+          "parameters": ["<ip>: Dirección IP del otro router (ej. 10.1.1.2)"],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "set transform-set VPN-SET",
+          "description": "Vincula el transform-set creado anteriormente.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "match address 110",
+          "description": "Relaciona esta entrada con la ACL 110 definida.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "exit",
+          "description": "Sale del modo de configuración crypto map.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-6-asignar-crypto-map-a-interface",
+      "title": "PASO 6 - Asignar crypto map a interfaz",
+      "briefDescription": "Aplica el crypto map a la interfaz de salida.",
+      "description": "El crypto map se aplica a la interfaz serial que se usa para salir hacia el otro extremo de la VPN.",
+      "commands": [
+        {
+          "command": "interface s0/0/0",
+          "description": "Selecciona la interfaz WAN de salida.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto map VPN-MAP",
+          "description": "Asocia el crypto map a la interfaz seleccionada.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-7-configurar-r3-similar",
+      "title": "PASO 7 - Configurar R3 con parámetros recíprocos",
+      "briefDescription": "Duplica la configuración en R3 con direcciones invertidas.",
+      "description": "Para completar la conexión de sitio a sitio, se repiten los mismos pasos en R3, pero con direcciones de red y dirección IP del peer intercambiadas.",
+      "commands": [
+        {
+          "command": "access-list 110 permit ip 192.168.3.0 0.0.0.255 192.168.1.0 0.0.0.255",
+          "description": "Define tráfico interesante desde R3 a R1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto isakmp policy 10",
+          "description": "Crea una política ISAKMP idéntica a la de R1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "encryption aes 256",
+          "description": "Configura AES-256 como método de encriptación.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "authentication pre-share",
+          "description": "Usa autenticación previa compartida.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "group 5",
+          "description": "Selecciona Diffie-Hellman grupo 5.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "exit",
+          "description": "Sale del modo de configuración ISAKMP.",
+          "parameters": [],
+          "mode": "(config-isakmp)#"
+        },
+        {
+          "command": "crypto isakmp key vpnpa55 address 10.1.1.2",
+          "description": "Establece la misma clave pre-compartida con la dirección de R1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac",
+          "description": "Define el mismo transform-set que en R1.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto map VPN-MAP 10 ipsec-isakmp",
+          "description": "Crea el crypto map con los mismos parámetros.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "description VPN connection to R1",
+          "description": "Agrega una descripción descriptiva.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "set peer 10.1.1.2",
+          "description": "Define el peer como la dirección de R1.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "set transform-set VPN-SET",
+          "description": "Vincula el transform-set creado anteriormente.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "match address 110",
+          "description": "Relaciona esta entrada con la ACL 110.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "exit",
+          "description": "Sale del modo de configuración crypto map.",
+          "parameters": [],
+          "mode": "(config-crypto-map)#"
+        },
+        {
+          "command": "interface s0/0/1",
+          "description": "Selecciona la interfaz WAN de salida en R3.",
+          "parameters": [],
+          "mode": "(config)#"
+        },
+        {
+          "command": "crypto map VPN-MAP",
+          "description": "Asocia el crypto map a la interfaz seleccionada.",
+          "parameters": [],
+          "mode": "(config-if)#"
+        }
+      ]
+    },
+    {
+      "id": "paso-8-verificar-la-conexion",
+      "title": "PASO 8 - Verificar la conexión IPsec",
+      "briefDescription": "Valida que la conexión funcione correctamente.",
+      "description": "Una vez que se genera tráfico interesante entre las redes, se debe activar la conexión IPsec. Se usan comandos de verificación para confirmar que la comunicación está cifrada.",
+      "commands": [
+        {
+          "command": "show crypto ipsec sa",
+          "description": "Muestra estadísticas de la conexión IPsec.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "ping <ip>",
+          "description": "Genera tráfico interesante para iniciar la conexión.",
+          "parameters": ["<ip>: Dirección IP de destino en la red remota"],
+          "mode": "#"
+        },
+        {
+          "command": "show crypto isakmp sa",
+          "description": "Muestra el estado de las sesiones ISAKMP activas.",
+          "parameters": [],
+          "mode": "#"
+        },
+        {
+          "command": "show crypto map",
+          "description": "Muestra la configuración del crypto map aplicado.",
+          "parameters": [],
+          "mode": "#"
+        }
+      ]
+    }
+  ]
+}
